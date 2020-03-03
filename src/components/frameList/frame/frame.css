@@ -1,0 +1,15 @@
+.frame {
+  position: relative;
+  display: flex;
+  width: 8vw;
+  height: 8vw;
+  margin-bottom: 0.5vh;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #333333;
+}
+
+.frame_selected {
+  border-color: #bdb76b;
+}

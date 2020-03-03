@@ -1,0 +1,62 @@
+button {
+  outline: none;
+}
+
+.button {
+  position: absolute;
+  width: 2vw;
+  height: 2vw;
+  z-index: 1;
+  border: none;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0;
+  transition: 0.25s ease-out;
+  cursor: pointer;
+}
+
+.button_frame-list_copy {
+  bottom: 0;
+  right: 0;
+  background-image: url('./icons/button-frame-list-copy.svg');
+  background-size: 1.5vw;
+}
+
+.button_frame-list_delete {
+  top: 0;
+  right: 0;
+  background-image: url('./icons/button-frame-list-delete.svg');
+  background-size: 1.5vw;
+}
+
+.button_frame-list_move {
+  bottom: 0;
+  left: 0;
+  background-image: url('./icons/button-frame-list-move.svg');
+  background-size: 1.5vw;
+}
+
+.button_frame-list_add {
+  width: 8vw;
+  height: 5vh;
+  flex-shrink: 0;
+  border: 2px solid #333333;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2vh;
+  color: #ffffff;
+  background-color: #33333380;
+  cursor: pointer;
+}
+
+.button:active {
+  background-size: 2vw;
+}
+
+.button_frame-list_add:hover {
+  color: #bdb76b;
+}
+
+.frame:hover > .button {
+  opacity: 1;
+}

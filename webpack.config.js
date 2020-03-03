@@ -6,7 +6,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const config = {
   entry: {
-    app: './src/app/app.ts',
+    app: './src/components/app.ts',
   },
   output: {
     filename: '[name].bundle.js',
@@ -41,7 +41,7 @@ const config = {
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       title: 'piskel clone ts',
-      template: './src/app/app.html',
+      template: './src/components/app.html',
     }),
     new MiniCssExtractPlugin({
       filename: '[name].styles.css',

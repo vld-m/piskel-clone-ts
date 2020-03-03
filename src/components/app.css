@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
+@import url('https://fonts.googleapis.com/css?family=Amatic+SC&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  flex-direction: column;
+  font-family: 'Montserrat', sans-serif;
+  color: #ffffff;
+  background-color: #1d1d1d;
+  overflow: hidden;
+}
+
+header {
+  display: flex;
+  height: 5vh;
+  align-items: center;
+  background-color: #2d2d2d;
+}
+
+main {
+  display: flex;
+  height: 95vh;
+  justify-content: center;
+}
+
+input {
+  outline: none;
+}
+
+.logo {
+  margin: 0 2vw;
+  font-family: 'Amatic SC', cursive;
+  font-size: 4vh;
+  cursor: pointer;
+}
+
+.container {
+  display: flex;
+  height: 94vh;
+  margin: 0.5vh 0;
+  flex-direction: column;
+  justify-content: space-around;
+}
