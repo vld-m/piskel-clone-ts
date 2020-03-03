@@ -3,6 +3,11 @@ import './frameList.css';
 import { Frame, FrameListeners } from './frame/Frame';
 import Button from './button/Button';
 
+interface TargetFrameAndTargetFrameIndex {
+  targetFrame: Frame;
+  targetFrameIndex: number;
+}
+
 class FrameList {
   public container: HTMLDivElement = document.createElement('div');
 
@@ -39,10 +44,22 @@ class FrameList {
   private getFrameListeners(): FrameListeners {
     return {
       onDelete: this.onDelete,
+      onCopy: this.onCopy,
     };
   }
 
-  private onAdd: EventListener = (): void => {
+  private getTargetFrameAndTargetFrameIndex(
+    target: EventTarget | null
+  ): TargetFrameAndTargetFrameIndex {
+    const targetFrameIndex = this.frameList.findIndex(
+      (frame) => frame.container === (target as HTMLElement).closest('.frame')
+    );
+    const targetFrame = this.frameList[targetFrameIndex];
+
+    return { targetFrame, targetFrameIndex };
+  }
+
+  private pasteNewFrame(): void {
     if (this.frameList.length === 1) {
       this.currentFrame.showButtonsDeleteAndMove();
     }
@@ -51,17 +68,17 @@ class FrameList {
     this.currentFrame = new Frame();
     this.currentFrame.subscribe(this.getFrameListeners());
     this.currentFrame.select();
+  }
+
+  private onAdd: EventListener = (): void => {
+    this.pasteNewFrame();
+    this.buttonAdd.button.before(this.currentFrame.container);
 
     this.frameList = [...this.frameList, this.currentFrame];
-
-    this.buttonAdd.button.before(this.currentFrame.container);
   };
 
   private onDelete: EventListener = ({ target }: Event): void => {
-    const targetFrameIndex = this.frameList.findIndex(
-      (frame) => frame.container === (target as HTMLElement).closest('.frame')
-    );
-    const targetFrame = this.frameList[targetFrameIndex];
+    const { targetFrame, targetFrameIndex } = this.getTargetFrameAndTargetFrameIndex(target);
 
     if (targetFrame === this.currentFrame) {
       // switch current frame
@@ -87,6 +104,19 @@ class FrameList {
     if (this.frameList.length === 1) {
       this.currentFrame.hideButtonsDeleteAndMove();
     }
+  };
+
+  private onCopy: EventListener = ({ target }: Event): void => {
+    const { targetFrame, targetFrameIndex } = this.getTargetFrameAndTargetFrameIndex(target);
+
+    this.pasteNewFrame();
+    targetFrame.container.after(this.currentFrame.container);
+
+    this.frameList = [
+      ...this.frameList.slice(0, targetFrameIndex + 1),
+      this.currentFrame,
+      ...this.frameList.slice(targetFrameIndex + 1),
+    ];
   };
 }
 

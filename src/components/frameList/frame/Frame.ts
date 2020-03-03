@@ -4,6 +4,7 @@ import Button from '../button/Button';
 
 interface FrameListeners {
   onDelete: EventListener;
+  onCopy: EventListener;
 }
 
 class Frame {
@@ -24,12 +25,14 @@ class Frame {
     this.container.remove();
   }
 
-  public subscribe({ onDelete }: FrameListeners): void {
+  public subscribe({ onDelete, onCopy }: FrameListeners): void {
     this.buttonDelete.subscribe(onDelete);
+    this.buttonCopy.subscribe(onCopy);
   }
 
-  public unsubscribe({ onDelete }: FrameListeners): void {
+  public unsubscribe({ onDelete, onCopy }: FrameListeners): void {
     this.buttonDelete.unsubscribe(onDelete);
+    this.buttonCopy.unsubscribe(onCopy);
   }
 
   public select(): void {
