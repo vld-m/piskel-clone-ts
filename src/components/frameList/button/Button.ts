@@ -1,7 +1,7 @@
 import './button.css';
 
 class Button {
-  public button: HTMLButtonElement = document.createElement('button');
+  public button = document.createElement('button');
 
   constructor(private name: string) {
     this.setClassList();
@@ -17,6 +17,14 @@ class Button {
     return name[0].toUpperCase() + name.slice(1);
   }
 
+  public hide(): void {
+    this.button.classList.add('button_hidden');
+  }
+
+  public show(): void {
+    this.button.classList.remove('button_hidden');
+  }
+
   public subscribe(listener: EventListener): void {
     this.button.addEventListener('click', listener);
   }
@@ -25,16 +33,8 @@ class Button {
     this.button.removeEventListener('click', listener);
   }
 
-  public show(): void {
-    this.button.hidden = false;
-  }
-
-  public hide(): void {
-    this.button.hidden = true;
-  }
-
   private setClassList(): void {
-    const classList: string[] =
+    const classList =
       this.name === 'add'
         ? [`button_frame-list_${this.name}`]
         : ['button', `button_frame-list_${this.name}`];
@@ -42,12 +42,12 @@ class Button {
     this.button.classList.add(...classList);
   }
 
-  private setTitle(): void {
-    this.button.title = `${Button.capitalize(this.name)} frame`;
-  }
-
   private setInnerText(text: string): void {
     this.button.innerText = text;
+  }
+
+  private setTitle(): void {
+    this.button.title = `${Button.capitalize(this.name)} frame`;
   }
 }
 

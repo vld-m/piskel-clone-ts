@@ -2,8 +2,10 @@ import './app.css';
 
 import FrameList from './frameList/FrameList';
 
+const main = document.querySelector('main') as HTMLElement;
+
 const frameList = new FrameList();
 
-const main = document.querySelector('main');
+main.append(frameList.container);
 
-(main as HTMLElement).append(frameList.container);
+frameList.initialize();

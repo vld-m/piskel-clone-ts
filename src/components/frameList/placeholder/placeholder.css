@@ -1,0 +1,12 @@
+.placeholder {
+  position: relative;
+  width: 8vw;
+  height: 8vw;
+  margin-bottom: 0.5vh;
+  border: 3px dashed #333333;
+  background-color: #bdb76b80;
+}
+
+.placeholder_hidden {
+  display: none;
+}
