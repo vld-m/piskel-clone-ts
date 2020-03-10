@@ -40,10 +40,11 @@ class FrameList {
 
   private getFrameListeners(): FrameListeners {
     return {
-      onDelete: this.onDelete,
       onCopy: this.onCopy,
-      onDragStart: this.onDragStart,
+      onDelete: this.onDelete,
       onDragEnter: this.onDragEnter,
+      onDragStart: this.onDragStart,
+      onSelect: this.onSelect,
     };
   }
 
@@ -147,9 +148,16 @@ class FrameList {
     this.draggedFrame = null;
   };
 
+  private onSelect: EventListener = (event: Event): void => {
+    const { targetFrame } = this.getFrameAndIndex(event.target);
+
+    if (targetFrame !== this.currentFrame) {
+      this.updateCurrentFrame(targetFrame);
+    }
+  };
+
   private renderButtonAdd(): void {
     this.buttonAdd.subscribe(this.onAdd);
-
     this.container.append(this.buttonAdd.button);
   }
 
@@ -187,8 +195,7 @@ class FrameList {
   }
 
   private updateFrameList(newFrame: Frame): void {
-    const frameListContainer = document.querySelector('.container_frame-list') as HTMLDivElement;
-    const containerList = Array.from(frameListContainer.children).filter(
+    const containerList = Array.from(this.container.children).filter(
       (element) => element !== this.buttonAdd.button
     );
 

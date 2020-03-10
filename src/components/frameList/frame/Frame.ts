@@ -3,10 +3,11 @@ import './frame.css';
 import Button from '../button/Button';
 
 interface FrameListeners {
-  onDelete: EventListener;
   onCopy: EventListener;
-  onDragStart: EventListener;
+  onDelete: EventListener;
   onDragEnter: EventListener;
+  onDragStart: EventListener;
+  onSelect: EventListener;
 }
 
 class Frame {
@@ -53,20 +54,28 @@ class Frame {
     this.container.classList.remove('frame_hidden');
   }
 
-  public subscribe({ onDragStart, onDragEnter, onDelete, onCopy }: FrameListeners): void {
-    this.container.addEventListener('dragstart', onDragStart);
+  public subscribe({ onDragEnter, onDragStart, onSelect, onCopy, onDelete }: FrameListeners): void {
     this.container.addEventListener('dragenter', onDragEnter);
+    this.container.addEventListener('dragstart', onDragStart);
+    this.container.addEventListener('click', onSelect);
 
-    this.buttonDelete.subscribe(onDelete);
     this.buttonCopy.subscribe(onCopy);
+    this.buttonDelete.subscribe(onDelete);
   }
 
-  public unsubscribe({ onDragStart, onDragEnter, onDelete, onCopy }: FrameListeners): void {
-    this.container.removeEventListener('dragstart', onDragStart);
+  public unsubscribe({
+    onDragEnter,
+    onDragStart,
+    onSelect,
+    onCopy,
+    onDelete,
+  }: FrameListeners): void {
     this.container.removeEventListener('dragenter', onDragEnter);
+    this.container.removeEventListener('dragstart', onDragStart);
+    this.container.removeEventListener('click', onSelect);
 
-    this.buttonDelete.unsubscribe(onDelete);
     this.buttonCopy.unsubscribe(onCopy);
+    this.buttonDelete.unsubscribe(onDelete);
   }
 
   private setAttributes(): void {
