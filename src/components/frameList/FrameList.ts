@@ -148,10 +148,14 @@ class FrameList {
   };
 
   private onSelect: EventListener = (event: Event): void => {
-    const { targetFrame } = this.getFrameAndIndex(event.target);
+    const isButtonSelected = !!(event.target as HTMLElement).closest('.button');
 
-    if (targetFrame !== this.currentFrame) {
-      this.updateCurrentFrame(targetFrame);
+    if (!isButtonSelected) {
+      const { targetFrame } = this.getFrameAndIndex(event.target);
+
+      if (targetFrame !== this.currentFrame) {
+        this.updateCurrentFrame(targetFrame);
+      }
     }
   };
 
