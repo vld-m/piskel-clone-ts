@@ -4,12 +4,11 @@ class Button {
   public button = document.createElement('button');
 
   constructor(private name: string) {
-    this.setClassList();
-    this.setTitle();
-
     if (this.name === 'add') {
       this.setInnerText('NEW FRAME');
     }
+
+    this.setButtonAttributes();
   }
 
   // to src/utils
@@ -33,21 +32,18 @@ class Button {
     this.button.removeEventListener('click', listener);
   }
 
-  private setClassList(): void {
+  private setButtonAttributes(): void {
     const classList =
       this.name === 'add'
         ? [`button_frame-list_${this.name}`]
         : ['button', `button_frame-list_${this.name}`];
 
     this.button.classList.add(...classList);
+    this.button.title = `${Button.capitalize(this.name)} frame`;
   }
 
   private setInnerText(text: string): void {
     this.button.innerText = text;
-  }
-
-  private setTitle(): void {
-    this.button.title = `${Button.capitalize(this.name)} frame`;
   }
 }
 

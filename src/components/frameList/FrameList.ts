@@ -1,7 +1,7 @@
 import './frameList.css';
 
 import { Frame, FrameListeners } from './frame/Frame';
-import { Placeholder, PlaceholderListeners } from './placeholder/Placeholder';
+import Placeholder from './placeholder/Placeholder';
 import Button from './button/Button';
 
 interface FrameAndIndex {
@@ -23,10 +23,16 @@ class FrameList {
   private placeholder = new Placeholder();
 
   public initialize(): void {
-    this.setAttributes();
+    this.setContainerAttributes();
+    this.addListenersToBody();
     this.renderInitialFrame();
     this.renderPlaceholder();
     this.renderButtonAdd();
+  }
+
+  private addListenersToBody(): void {
+    document.body.addEventListener('dragover', this.onDragOver);
+    document.body.addEventListener('drop', this.onDrop);
   }
 
   private getFrameAndIndex(target: EventTarget | null): FrameAndIndex {
@@ -45,13 +51,6 @@ class FrameList {
       onDragEnter: this.onDragEnter,
       onDragStart: this.onDragStart,
       onSelect: this.onSelect,
-    };
-  }
-
-  private getPlaceholderListeners(): PlaceholderListeners {
-    return {
-      onDragOver: this.onDragOver,
-      onDrop: this.onDrop,
     };
   }
 
@@ -173,11 +172,10 @@ class FrameList {
   }
 
   private renderPlaceholder(): void {
-    this.placeholder.subscribe(this.getPlaceholderListeners());
     this.placeholder.hide();
   }
 
-  private setAttributes(): void {
+  private setContainerAttributes(): void {
     this.container.classList.add('container', 'container_frame-list');
   }
 

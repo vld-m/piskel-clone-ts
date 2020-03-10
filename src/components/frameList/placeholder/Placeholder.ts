@@ -1,10 +1,5 @@
 import './placeholder.css';
 
-interface PlaceholderListeners {
-  onDragOver: EventListener;
-  onDrop: EventListener;
-}
-
 const INDEX_SHIFT = 0.5;
 
 class Placeholder {
@@ -13,7 +8,7 @@ class Placeholder {
   private position: number = INDEX_SHIFT;
 
   constructor() {
-    this.setAttributes();
+    this.setContainerAttributes();
   }
 
   public getPosition(): number {
@@ -40,14 +35,9 @@ class Placeholder {
     this.container.classList.remove('placeholder_hidden');
   }
 
-  public subscribe({ onDragOver, onDrop }: PlaceholderListeners): void {
-    this.container.addEventListener('dragover', onDragOver);
-    this.container.addEventListener('drop', onDrop);
-  }
-
-  private setAttributes(): void {
+  private setContainerAttributes(): void {
     this.container.classList.add('placeholder');
   }
 }
 
-export { Placeholder, PlaceholderListeners };
+export default Placeholder;

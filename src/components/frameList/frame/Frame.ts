@@ -20,7 +20,7 @@ class Frame {
   private buttonMove = new Button('move');
 
   constructor() {
-    this.setAttributes();
+    this.setContainerAttributes();
     this.renderButtons();
   }
 
@@ -78,7 +78,7 @@ class Frame {
     this.buttonDelete.unsubscribe(onDelete);
   }
 
-  private setAttributes(): void {
+  private setContainerAttributes(): void {
     this.container.classList.add('frame');
     this.container.draggable = true;
   }
