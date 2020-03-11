@@ -19,8 +19,11 @@ class Frame {
 
   private buttonMove = new Button('move');
 
+  private index = document.createElement('div');
+
   constructor() {
     this.setContainerAttributes();
+    this.renderIndex();
     this.renderButtons();
   }
 
@@ -31,6 +34,10 @@ class Frame {
   public hideButtonsDeleteAndMove(): void {
     this.buttonDelete.hide();
     this.buttonMove.hide();
+  }
+
+  public hideIndex(): void {
+    this.index.classList.add('index_hidden');
   }
 
   public hide(): void {
@@ -45,9 +52,17 @@ class Frame {
     this.container.classList.add('frame_selected');
   }
 
+  public setIndex(index: number): void {
+    this.index.innerText = `${index}`;
+  }
+
   public showButtonsDeleteAndMove(): void {
     this.buttonDelete.show();
     this.buttonMove.show();
+  }
+
+  public showIndex(): void {
+    this.index.classList.remove('index_hidden');
   }
 
   public show(): void {
@@ -85,8 +100,12 @@ class Frame {
 
   private renderButtons(): void {
     const buttons = [this.buttonDelete.button, this.buttonMove.button, this.buttonCopy.button];
-
     this.container.append(...buttons);
+  }
+
+  private renderIndex(): void {
+    this.index.classList.add('index');
+    this.container.append(this.index);
   }
 }
 

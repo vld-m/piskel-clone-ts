@@ -10,10 +10,28 @@
   border: 3px solid #333333;
 }
 
+.index {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  width: 2vw;
+  height: 2vw;
+  z-index: 1;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5vw;
+  color: #ffffff;
+}
+
 .frame_hidden {
   display: none;
 }
 
 .frame_selected {
   border-color: #bdb76b;
+}
+
+.index_hidden {
+  display: none;
 }

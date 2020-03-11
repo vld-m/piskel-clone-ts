@@ -66,6 +66,7 @@ class FrameList {
 
     this.updateCurrentFrame(newFrame);
     this.updateFrameList(newFrame);
+    this.updateIndexes();
   };
 
   private onCopy: EventListener = ({ target }: Event): void => {
@@ -77,6 +78,7 @@ class FrameList {
 
     this.updateCurrentFrame(newFrame);
     this.updateFrameList(newFrame);
+    this.updateIndexes();
   };
 
   private onDelete: EventListener = ({ target }: Event): void => {
@@ -98,7 +100,10 @@ class FrameList {
       ...this.frameList.slice(targetIndex + 1),
     ];
 
+    this.updateIndexes();
+
     if (this.currentFrame && this.frameList.length === 1) {
+      this.currentFrame.hideIndex();
       this.currentFrame.hideButtonsDeleteAndMove();
     }
   };
@@ -142,6 +147,7 @@ class FrameList {
       this.placeholder.container.replaceWith(this.draggedFrame.container);
 
       this.updateFrameList(this.draggedFrame);
+      this.updateIndexes();
     }
 
     this.draggedFrame = null;
@@ -188,6 +194,7 @@ class FrameList {
       this.currentFrame.deselect();
 
       if (this.frameList.length === 1) {
+        this.currentFrame.showIndex();
         this.currentFrame.showButtonsDeleteAndMove();
       }
     }
@@ -204,6 +211,10 @@ class FrameList {
     this.frameList = containerList.map(
       (container) => this.mapContainerToFrame(container) || newFrame
     );
+  }
+
+  private updateIndexes(): void {
+    this.frameList.forEach((frame, index) => frame.setIndex(index + 1));
   }
 }
 
