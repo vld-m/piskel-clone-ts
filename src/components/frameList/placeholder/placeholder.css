@@ -3,6 +3,7 @@
   width: 8vw;
   height: 8vw;
   margin-bottom: 0.5vh;
+  flex-shrink: 0;
   border: 3px dashed #333333;
   background-color: #bdb76b80;
 }
