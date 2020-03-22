@@ -3,6 +3,7 @@ import './frameList.css';
 import { Frame, FrameListeners } from './frame/Frame';
 import Placeholder from './placeholder/Placeholder';
 import Button from './button/Button';
+import BUTTONS from './constants';
 
 interface FrameAndIndex {
   targetFrame: Frame;
@@ -12,7 +13,7 @@ interface FrameAndIndex {
 class FrameList {
   public container = document.createElement('div');
 
-  private buttonAdd = new Button('add');
+  private buttonAdd = new Button(BUTTONS.ADD);
 
   private currentFrame: Frame | null = null;
 

@@ -1,6 +1,7 @@
 import './frame.css';
 
 import Button from '../button/Button';
+import BUTTONS from '../constants';
 
 interface FrameListeners {
   onCopy: EventListener;
@@ -13,11 +14,11 @@ interface FrameListeners {
 class Frame {
   public container = document.createElement('div');
 
-  private buttonCopy = new Button('copy');
+  private buttonCopy = new Button(BUTTONS.COPY);
 
-  private buttonDelete = new Button('delete');
+  private buttonDelete = new Button(BUTTONS.DELETE);
 
-  private buttonMove = new Button('move');
+  private buttonMove = new Button(BUTTONS.MOVE);
 
   private index = document.createElement('div');
 
