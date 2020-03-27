@@ -1,0 +1,19 @@
+.tool {
+  width: 4vw;
+  height: 4vw;
+  margin: 0.1vw;
+  border: 3px solid #333333;
+  background-color: #33333380;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 2.5vw;
+  cursor: pointer;
+}
+
+.tool:not(.tool_current):hover {
+  border-color: #ffffff;
+}
+
+.tool_current {
+  border: 3px solid #bdb76b;
+}

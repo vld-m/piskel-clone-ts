@@ -1,11 +1,11 @@
 import './app.css';
 
-import FrameList from './frameList/FrameList';
+import ToolList from './toolList/ToolList';
 
 const main = document.querySelector('main') as HTMLElement;
 
-const frameList = new FrameList();
+const toolList = new ToolList();
 
-main.append(frameList.container);
+main.append(toolList.container);
 
-frameList.initialize();
+toolList.initialize();
