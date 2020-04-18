@@ -1,10 +1,12 @@
 import './button.css';
 
+import BUTTONS from '../constants';
+
 class Button {
   public button = document.createElement('button');
 
   constructor(private name: string) {
-    if (this.name === 'add') {
+    if (this.name === BUTTONS.ADD) {
       this.setInnerText('NEW FRAME');
     }
 
@@ -14,6 +16,12 @@ class Button {
   // to src/utils
   static capitalize(name: string): string {
     return name[0].toUpperCase() + name.slice(1);
+  }
+
+  static getClassList(buttonName: string): string[] {
+    return buttonName === BUTTONS.ADD
+      ? [`button_frame-list_${buttonName}`]
+      : ['button', `button_frame-list_${buttonName}`];
   }
 
   public hide(): void {
@@ -33,12 +41,7 @@ class Button {
   }
 
   private setButtonAttributes(): void {
-    const classList =
-      this.name === 'add'
-        ? [`button_frame-list_${this.name}`]
-        : ['button', `button_frame-list_${this.name}`];
-
-    this.button.classList.add(...classList);
+    this.button.classList.add(...Button.getClassList(this.name));
     this.button.title = `${Button.capitalize(this.name)} frame`;
   }
 
