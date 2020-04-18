@@ -219,4 +219,4 @@ class FrameList {
   }
 }
 
-export default FrameList;
+export default new FrameList();
