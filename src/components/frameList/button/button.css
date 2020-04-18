@@ -15,21 +15,21 @@
 .button_frame-list_copy {
   bottom: 0;
   right: 0;
-  background-image: url('./icons/button-frame-list-copy.svg');
+  background-image: url('./icons/copy.svg');
   background-size: 1.5vw;
 }
 
 .button_frame-list_delete {
   top: 0;
   right: 0;
-  background-image: url('./icons/button-frame-list-delete.svg');
+  background-image: url('./icons/delete.svg');
   background-size: 1.5vw;
 }
 
 .button_frame-list_move {
   bottom: 0;
   left: 0;
-  background-image: url('./icons/button-frame-list-move.svg');
+  background-image: url('./icons/move.svg');
   background-size: 1.5vw;
 }
 
