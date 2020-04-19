@@ -109,8 +109,8 @@ class FrameList {
     }
   };
 
-  private onDragEnter: EventListener = (event: Event): void => {
-    const { targetFrame, targetIndex } = this.getFrameAndIndex(event.target);
+  private onDragEnter: EventListener = ({ target }: Event): void => {
+    const { targetFrame, targetIndex } = this.getFrameAndIndex(target);
     const placeholderIndex = this.placeholder.getPosition();
 
     if (placeholderIndex > targetIndex) {
@@ -126,8 +126,8 @@ class FrameList {
     event.preventDefault();
   };
 
-  private onDragStart: EventListener = (event: Event): void => {
-    const { targetFrame, targetIndex } = this.getFrameAndIndex(event.target);
+  private onDragStart: EventListener = ({ target }: Event): void => {
+    const { targetFrame, targetIndex } = this.getFrameAndIndex(target);
 
     this.draggedFrame = targetFrame;
 
@@ -154,11 +154,11 @@ class FrameList {
     this.draggedFrame = null;
   };
 
-  private onSelect: EventListener = (event: Event): void => {
-    const isButtonSelected = !!(event.target as HTMLElement).closest('.button');
+  private onSelect: EventListener = ({ target }: Event): void => {
+    const isButtonSelected = !!(target as HTMLElement).closest('.button');
 
     if (!isButtonSelected) {
-      const { targetFrame } = this.getFrameAndIndex(event.target);
+      const { targetFrame } = this.getFrameAndIndex(target);
 
       if (targetFrame !== this.currentFrame) {
         this.updateCurrentFrame(targetFrame);
