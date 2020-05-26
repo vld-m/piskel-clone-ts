@@ -3,6 +3,9 @@ import './frameList.css';
 import { Frame, FrameListeners } from './frame/Frame';
 import Placeholder from './placeholder/Placeholder';
 import Button from './button/Button';
+
+import { isHTMLElement } from '../../utils/typeGuards';
+
 import BUTTONS from './constants';
 
 interface FrameAndIndex {
@@ -75,11 +78,11 @@ class FrameList {
   };
 
   private onCopy: EventListener = ({ target }: Event): void => {
-    if (target === null) {
+    if (target === null || !isHTMLElement(target)) {
       return;
     }
 
-    const { targetFrame } = this.getFrameAndIndex(target as HTMLElement);
+    const { targetFrame } = this.getFrameAndIndex(target);
     const newFrame = new Frame();
 
     newFrame.subscribe(this.getFrameListeners());
@@ -91,11 +94,11 @@ class FrameList {
   };
 
   private onDelete: EventListener = ({ target }: Event): void => {
-    if (target === null) {
+    if (target === null || !isHTMLElement(target)) {
       return;
     }
 
-    const { targetFrame, targetIndex } = this.getFrameAndIndex(target as HTMLElement);
+    const { targetFrame, targetIndex } = this.getFrameAndIndex(target);
 
     // remove target frame from the frame list
     targetFrame.unsubscribe(this.getFrameListeners());
@@ -122,11 +125,11 @@ class FrameList {
   };
 
   private onDragEnter: EventListener = ({ target }: Event): void => {
-    if (target === null) {
+    if (target === null || !isHTMLElement(target)) {
       return;
     }
 
-    const { targetFrame, targetIndex } = this.getFrameAndIndex(target as HTMLElement);
+    const { targetFrame, targetIndex } = this.getFrameAndIndex(target);
     const placeholderIndex = this.placeholder.getPosition();
 
     if (placeholderIndex > targetIndex) {
@@ -143,11 +146,11 @@ class FrameList {
   };
 
   private onDragStart: EventListener = ({ target }: Event): void => {
-    if (target === null) {
+    if (target === null || !isHTMLElement(target)) {
       return;
     }
 
-    const { targetFrame, targetIndex } = this.getFrameAndIndex(target as HTMLElement);
+    const { targetFrame, targetIndex } = this.getFrameAndIndex(target);
 
     this.draggedFrame = targetFrame;
 
@@ -175,11 +178,11 @@ class FrameList {
   };
 
   private onSelect: EventListener = ({ target }: Event): void => {
-    if (target === null || FrameList.isButton(target as HTMLElement)) {
+    if (target === null || !isHTMLElement(target) || FrameList.isButton(target)) {
       return;
     }
 
-    const { targetFrame } = this.getFrameAndIndex(target as HTMLElement);
+    const { targetFrame } = this.getFrameAndIndex(target);
 
     if (targetFrame !== this.currentFrame) {
       this.updateCurrentFrame(targetFrame);

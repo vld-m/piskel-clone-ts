@@ -100,8 +100,7 @@ class Frame {
   }
 
   private renderButtons(): void {
-    const buttons = [this.buttonDelete.button, this.buttonMove.button, this.buttonCopy.button];
-    this.container.append(...buttons);
+    this.container.append(this.buttonDelete.button, this.buttonMove.button, this.buttonCopy.button);
   }
 
   private renderIndex(): void {
