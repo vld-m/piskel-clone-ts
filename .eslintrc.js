@@ -89,14 +89,9 @@ module.exports = {
       },
       plugins: ['@typescript-eslint'],
       rules: {
-        'import/extensions': [
-          'error',
-          'ignorePackages',
-          {
-            ts: 'never',
-            js: 'never',
-          },
-        ],
+        'no-param-reassign': ['error', { props: false }],
+        'import/extensions': ['error', 'ignorePackages', { ts: 'never', js: 'never' }],
+        'import/prefer-default-export': 'off',
         '@typescript-eslint/member-ordering': ['warn', memberOrderingConfig],
       },
       settings: {

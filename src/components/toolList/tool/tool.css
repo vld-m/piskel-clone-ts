@@ -10,10 +10,10 @@
   cursor: pointer;
 }
 
-.tool:not(.tool_current):hover {
+.tool:not(.tool_active):hover {
   border-color: #ffffff;
 }
 
-.tool_current {
+.tool_active {
   border: 3px solid #bdb76b;
 }
