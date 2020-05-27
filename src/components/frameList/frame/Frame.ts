@@ -29,7 +29,7 @@ class Frame {
   }
 
   public deselect(): void {
-    this.container.classList.remove('frame_selected');
+    this.container.classList.remove('frame_active');
   }
 
   public hideButtonsDeleteAndMove(): void {
@@ -50,7 +50,7 @@ class Frame {
   }
 
   public select(): void {
-    this.container.classList.add('frame_selected');
+    this.container.classList.add('frame_active');
   }
 
   public setIndex(index: number): void {

@@ -28,7 +28,7 @@
   display: none;
 }
 
-.frame_selected {
+.frame_active {
   border-color: #bdb76b;
 }
 
