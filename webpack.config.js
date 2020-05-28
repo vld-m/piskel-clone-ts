@@ -9,7 +9,6 @@ const config = {
     app: './src/components/app.ts',
   },
   output: {
-    filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
   module: {
@@ -37,15 +36,25 @@ const config = {
       },
     ],
   },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        styles: {
+          name: 'styles',
+          test: /\.css$/,
+          chunks: 'all',
+          enforce: true,
+        },
+      },
+    },
+  },
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       title: 'piskel clone ts',
       template: './src/components/app.html',
     }),
-    new MiniCssExtractPlugin({
-      filename: '[name].styles.css',
-    }),
+    new MiniCssExtractPlugin(),
   ],
   resolve: {
     extensions: ['.ts', '.js'],

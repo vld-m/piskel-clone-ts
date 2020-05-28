@@ -9,17 +9,19 @@ class ActiveTool {
 
   private tool: Tool | null = null;
 
-  public set(name: string): void {
+  public async set(name: string): Promise<void> {
     if (this.cache[name]) {
       this.tool = this.cache[name];
 
       return;
     }
 
-    import(`./${name}/${name}.ts`).then(({ default: tool }: { default: Tool }) => {
-      this.cache[tool.name] = tool;
-      this.tool = tool;
-    });
+    const { default: tool }: { default: Tool } = await import(
+      /* webpackChunkName: "[request]" */ `./${name}/${name}.ts`
+    );
+
+    this.cache[tool.name] = tool;
+    this.tool = tool;
   }
 }
 

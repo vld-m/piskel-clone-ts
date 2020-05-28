@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "strict": true,
-    "sourceMap": true
+    "module": "esnext",
+    "sourceMap": true,
+    "strict": true
   }
 }
