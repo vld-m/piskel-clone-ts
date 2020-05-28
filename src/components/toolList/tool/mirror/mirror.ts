@@ -1,5 +1,3 @@
-import './mirror.css';
-
 import TOOLS from '../../constants';
 
 class Mirror {

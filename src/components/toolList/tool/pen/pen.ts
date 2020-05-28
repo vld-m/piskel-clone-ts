@@ -1,5 +1,3 @@
-import './pen.css';
-
 import TOOLS from '../../constants';
 
 class Pen {

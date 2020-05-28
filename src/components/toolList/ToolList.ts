@@ -11,6 +11,8 @@ class ToolList {
 
   public container = document.createElement('div');
 
+  private activeToolContainer: HTMLElement | null = null;
+
   public initialize(): void {
     this.setContainerAttributes();
     this.addListenersToContainer();
@@ -23,9 +25,14 @@ class ToolList {
   }
 
   private async loadInitialTool(): Promise<void> {
-    const tool = document.querySelector(`.tool_${TOOLS.PEN}`);
+    const toolContainer = document.querySelector(`.tool_${TOOLS.PEN}`);
 
-    this.activeTool.set(tool as HTMLDivElement);
+    if (toolContainer === null || !isHTMLElement(toolContainer)) {
+      return;
+    }
+
+    this.selectActiveToolContainer(toolContainer);
+    this.activeTool.set(TOOLS.PEN);
   }
 
   private onSelect: EventListener = async ({ target }: Event): Promise<void> => {
@@ -33,18 +40,21 @@ class ToolList {
       return;
     }
 
-    const tool = target.closest('.tool');
+    const toolContainer = target.closest('.tool');
 
-    if (tool === null || !isHTMLElement(tool)) {
+    if (toolContainer === null || !isHTMLElement(toolContainer)) {
       return;
     }
 
-    this.activeTool.set(tool);
+    this.selectActiveToolContainer(toolContainer);
+    this.activeTool.set(toolContainer.dataset.name as string);
   };
 
   private renderToolContainers(): void {
     const createToolContainer = (name: string): HTMLDivElement => {
       const toolContainer = document.createElement('div');
+
+      import(`./tool/${name}/${name}.css`);
 
       toolContainer.classList.add('tool', `tool_${name}`);
       toolContainer.dataset.name = `${name}`;
@@ -53,6 +63,16 @@ class ToolList {
     };
 
     this.container.append(...Object.values(TOOLS).map(createToolContainer));
+  }
+
+  private selectActiveToolContainer(container: HTMLElement): void {
+    if (this.activeToolContainer) {
+      this.activeToolContainer.classList.remove('tool_active');
+    }
+
+    this.activeToolContainer = container;
+
+    this.activeToolContainer.classList.add('tool_active');
   }
 
   private setContainerAttributes(): void {

@@ -7,39 +7,19 @@ interface Tool {
 class ActiveTool {
   private cache: { [name: string]: Tool } = {};
 
-  private container: HTMLElement | null = null;
-
   private tool: Tool | null = null;
 
-  public set(container: HTMLElement): void {
-    this.setContainer(container);
-    this.setTool(container);
-  }
-
-  private async getTool(name: string): Promise<Tool> {
+  public set(name: string): void {
     if (this.cache[name]) {
-      return this.cache[name];
+      this.tool = this.cache[name];
+
+      return;
     }
 
-    const { default: tool }: { default: Tool } = await import(`./${name}/${name}.ts`);
-
-    this.cache[tool.name] = tool;
-
-    return tool;
-  }
-
-  private setContainer(container: HTMLElement): void {
-    if (this.container) {
-      this.container.classList.remove('tool_active');
-    }
-
-    this.container = container;
-
-    this.container.classList.add('tool_active');
-  }
-
-  private async setTool({ dataset: { name } }: HTMLElement): Promise<void> {
-    this.tool = await this.getTool(name as string);
+    import(`./${name}/${name}.ts`).then(({ default: tool }: { default: Tool }) => {
+      this.cache[tool.name] = tool;
+      this.tool = tool;
+    });
   }
 }
 
