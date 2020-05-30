@@ -1,9 +1,12 @@
 import './toolList.css';
 
+// entities
 import ActiveTool from './ActiveTool';
 
+// type guards
 import { isHTMLElement } from '../../utils/typeGuards';
 
+// constants
 import TOOLS from './constants';
 
 class ToolList {

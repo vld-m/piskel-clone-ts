@@ -1,3 +1,4 @@
+// constants
 import TOOLS from '../../constants';
 
 class Mirror {

@@ -1,17 +1,18 @@
 import './frameList.css';
 
-import { Frame, FrameListeners } from './frame/Frame';
+// entities
+import Frame from './frame/Frame';
 import Placeholder from './placeholder/Placeholder';
 import Button from './button/Button';
 
+// type guards
 import { isHTMLElement } from '../../utils/typeGuards';
 
+// constants
 import BUTTONS from './constants';
 
-interface FrameAndIndex {
-  targetFrame: Frame;
-  targetIndex: number;
-}
+// interfaces
+import { FrameListeners } from './interfaces';
 
 class FrameList {
   public container = document.createElement('div');
@@ -43,7 +44,12 @@ class FrameList {
     document.body.addEventListener('drop', this.onDrop);
   }
 
-  private getFrameAndIndex(target: HTMLElement): FrameAndIndex {
+  private getFrameAndIndex(
+    target: HTMLElement
+  ): {
+    targetFrame: Frame;
+    targetIndex: number;
+  } {
     const targetIndex = this.frameList.findIndex(
       (frame) => frame.container === target.closest('.frame')
     );

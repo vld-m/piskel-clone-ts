@@ -1,20 +1,7 @@
 import './tool/tool.css';
 
-// import EventEmitter from '../../utils/EventEmitter';
-
-// import { EVENTS } from '../constants';
-
-interface CanvasListeners {
-  onMouseDown: EventListener;
-  onMouseMove: EventListener;
-  onMouseLeave: EventListener;
-  onMouseUp: EventListener;
-}
-
-interface Tool {
-  name: string;
-  getCanvasListeners(): CanvasListeners;
-}
+// interfaces
+import { Tool } from './interfaces';
 
 class ActiveTool {
   private cache: { [name: string]: Tool } = {};
@@ -32,8 +19,6 @@ class ActiveTool {
       this.cache[tool.name] = tool;
       this.tool = tool;
     }
-
-    // EventEmitter.emit<CanvasListeners>(EVENTS.TOOL_CHANGE, this.tool.getCanvasListeners());
   }
 }
 

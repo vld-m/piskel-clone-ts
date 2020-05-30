@@ -1,5 +1,6 @@
 import './button.css';
 
+// constants
 import BUTTONS from '../constants';
 
 class Button {

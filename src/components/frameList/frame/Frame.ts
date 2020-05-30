@@ -1,15 +1,13 @@
 import './frame.css';
 
+// entities
 import Button from '../button/Button';
+
+// constants
 import BUTTONS from '../constants';
 
-interface FrameListeners {
-  onCopy: EventListener;
-  onDelete: EventListener;
-  onDragEnter: EventListener;
-  onDragStart: EventListener;
-  onSelect: EventListener;
-}
+// interfaces
+import { FrameListeners } from '../interfaces';
 
 class Frame {
   public container = document.createElement('div');
@@ -109,4 +107,4 @@ class Frame {
   }
 }
 
-export { Frame, FrameListeners };
+export default Frame;
