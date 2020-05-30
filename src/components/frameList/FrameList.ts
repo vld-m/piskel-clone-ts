@@ -1,12 +1,12 @@
 import './frameList.css';
 
 // entities
-import Frame from './frame/Frame';
-import Placeholder from './placeholder/Placeholder';
-import Button from './button/Button';
+import Frame from './frame/frame';
+import Placeholder from './placeholder/placeholder';
+import Button from './button/button';
 
 // type guards
-import { isHTMLElement } from '../../utils/typeGuards';
+import { isHTMLElement } from '../typeGuards';
 
 // constants
 import BUTTONS from './constants';

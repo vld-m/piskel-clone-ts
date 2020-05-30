@@ -1,10 +1,10 @@
 import './toolList.css';
 
 // entities
-import ActiveTool from './ActiveTool';
+import ActiveTool from './activeTool';
 
 // type guards
-import { isHTMLElement } from '../../utils/typeGuards';
+import { isHTMLElement } from '../typeGuards';
 
 // constants
 import TOOLS from './constants';

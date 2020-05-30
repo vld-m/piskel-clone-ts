@@ -1,7 +1,7 @@
 import './frame.css';
 
 // entities
-import Button from '../button/Button';
+import Button from '../button/button';
 
 // constants
 import BUTTONS from '../constants';
