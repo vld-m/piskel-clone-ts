@@ -1,6 +1,6 @@
 import './toolList.css';
 
-import ActiveTool from './tool/ActiveTool';
+import ActiveTool from './ActiveTool';
 
 import { isHTMLElement } from '../../utils/typeGuards';
 
