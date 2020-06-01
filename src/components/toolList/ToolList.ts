@@ -7,7 +7,7 @@ import ActiveTool from './activeTool';
 import { isHTMLElement } from '../typeGuards';
 
 // constants
-import TOOLS from './constants';
+import { TOOLS } from './constants';
 
 class ToolList {
   public activeTool = new ActiveTool();

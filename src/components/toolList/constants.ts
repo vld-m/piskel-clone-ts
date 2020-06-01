@@ -1,6 +1,6 @@
 const TOOLS = {
   PEN: 'pen',
   MIRROR: 'mirror',
-};
+} as const;
 
-export default TOOLS;
+export { TOOLS };

@@ -4,7 +4,7 @@ import './frame.css';
 import Button from '../button/button';
 
 // constants
-import BUTTONS from '../constants';
+import { BUTTONS } from '../constants';
 
 // interfaces
 import { FrameListeners } from '../interfaces';

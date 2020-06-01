@@ -1,11 +1,17 @@
-interface EventListener {
-  <T>(payload: T): void;
-}
+// constants
+import { EVENTS } from '../components/constants';
 
-class EventEmitter {
-  private listeners: { [eventName: string]: EventListener } = {};
+// interfaces
+import { CanvasListeners } from '../components/interfaces';
 
-  emit<T>(eventName: string, payload: T): boolean {
+type Events = {
+  [EVENTS.TOOL_CHANGE]: CanvasListeners;
+};
+
+class EventEmitter<T> {
+  private listeners: { [K in keyof T]?: (payload: T[K]) => void } = {};
+
+  emit<L extends keyof T>(eventName: L, payload: T[L]): boolean {
     const listener = this.listeners[eventName];
 
     if (listener !== undefined) {
@@ -17,11 +23,11 @@ class EventEmitter {
     return false;
   }
 
-  on(eventName: string, listener: EventListener): EventEmitter {
+  on<M extends keyof T>(eventName: M, listener: (payload: T[M]) => void): EventEmitter<T> {
     this.listeners = { ...this.listeners, [eventName]: listener };
 
     return this;
   }
 }
 
-export default new EventEmitter();
+export default new EventEmitter<Events>();

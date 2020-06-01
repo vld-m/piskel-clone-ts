@@ -1,7 +1,7 @@
 import './button.css';
 
 // constants
-import BUTTONS from '../constants';
+import { BUTTONS } from '../constants';
 
 class Button {
   public button = document.createElement('button');

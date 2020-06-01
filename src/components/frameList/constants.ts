@@ -3,6 +3,6 @@ const BUTTONS = {
   COPY: 'copy',
   DELETE: 'delete',
   MOVE: 'move',
-};
+} as const;
 
-export default BUTTONS;
+export { BUTTONS };

@@ -9,7 +9,7 @@ import Button from './button/button';
 import { isHTMLElement } from '../typeGuards';
 
 // constants
-import BUTTONS from './constants';
+import { BUTTONS } from './constants';
 
 // interfaces
 import { FrameListeners } from './interfaces';
