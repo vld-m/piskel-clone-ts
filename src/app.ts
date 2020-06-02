@@ -1,9 +1,7 @@
 import './app.css';
 
-import ToolList from './components/toolList/toolList';
+import canvas from './components/canvas/canvas';
 
 const main = document.querySelector('main') as HTMLElement;
 
-main.append(ToolList.container);
-
-ToolList.initialize();
+main.append(canvas.container);

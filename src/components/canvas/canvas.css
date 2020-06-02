@@ -1,0 +1,11 @@
+.container_canvas {
+  width: 61.5vw;
+  align-items: center;
+  background-color: #33333380;
+}
+
+.canvas {
+  background-color: #5d5d5d;
+  background-image: url(./canvas.svg);
+  image-rendering: pixelated;
+}
