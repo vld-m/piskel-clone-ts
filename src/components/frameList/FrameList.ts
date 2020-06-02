@@ -27,16 +27,16 @@ class FrameList {
 
   private placeholder = new Placeholder();
 
-  private static isButton(target: HTMLElement): boolean {
-    return !!target.closest('.button');
-  }
-
-  public initialize(): void {
+  constructor() {
     this.setContainerAttributes();
     this.addListenersToBody();
     this.renderInitialFrame();
     this.renderPlaceholder();
     this.renderButtonAdd();
+  }
+
+  private static isButton(target: HTMLElement): boolean {
+    return !!target.closest('.button');
   }
 
   private addListenersToBody(): void {

@@ -16,7 +16,7 @@ class ToolList {
 
   private activeToolContainer: HTMLElement | null = null;
 
-  public initialize(): void {
+  constructor() {
     this.setContainerAttributes();
     this.addListenersToContainer();
     this.renderToolContainers();
@@ -28,9 +28,11 @@ class ToolList {
   }
 
   private async loadInitialTool(): Promise<void> {
-    const toolContainer = document.querySelector(`.tool_${TOOLS.PEN}`);
+    const toolContainer = Array.from(this.container.children).find(
+      (child) => (child as HTMLElement).dataset.name === TOOLS.PEN
+    );
 
-    if (toolContainer === null || !isHTMLElement(toolContainer)) {
+    if (toolContainer === undefined || !isHTMLElement(toolContainer)) {
       return;
     }
 
