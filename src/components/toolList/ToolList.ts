@@ -10,9 +10,9 @@ import { isHTMLElement } from '../typeGuards';
 import { TOOLS } from './constants';
 
 class ToolList {
-  public activeTool = new ActiveTool();
+  public readonly activeTool = new ActiveTool();
 
-  public container = document.createElement('div');
+  public readonly container = document.createElement('div');
 
   private activeToolContainer: HTMLElement | null = null;
 

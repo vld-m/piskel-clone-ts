@@ -3,7 +3,7 @@ import './placeholder.css';
 const INDEX_SHIFT = 0.5;
 
 class Placeholder {
-  public container = document.createElement('div');
+  public readonly container = document.createElement('div');
 
   private position: number = INDEX_SHIFT;
 

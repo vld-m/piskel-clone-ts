@@ -10,7 +10,7 @@ import { BUTTONS } from '../constants';
 import { FrameListeners } from '../interfaces';
 
 class Frame {
-  public container = document.createElement('div');
+  public readonly container = document.createElement('div');
 
   private buttonCopy = new Button(BUTTONS.COPY);
 

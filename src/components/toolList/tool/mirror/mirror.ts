@@ -1,8 +1,8 @@
 // constants
-import TOOLS from '../../constants';
+import { TOOLS } from '../../constants';
 
 class Mirror {
-  public name = TOOLS.MIRROR;
+  public readonly name = TOOLS.MIRROR;
 }
 
 export default new Mirror();

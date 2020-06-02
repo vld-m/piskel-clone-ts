@@ -4,7 +4,7 @@ import './button.css';
 import { BUTTONS } from '../constants';
 
 class Button {
-  public button = document.createElement('button');
+  public readonly button = document.createElement('button');
 
   constructor(private name: string) {
     if (this.name === BUTTONS.ADD) {

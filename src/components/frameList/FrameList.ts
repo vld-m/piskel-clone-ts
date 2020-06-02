@@ -15,7 +15,7 @@ import { BUTTONS } from './constants';
 import { FrameListeners } from './interfaces';
 
 class FrameList {
-  public container = document.createElement('div');
+  public readonly container = document.createElement('div');
 
   private buttonAdd = new Button(BUTTONS.ADD);
 

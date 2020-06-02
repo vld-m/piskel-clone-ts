@@ -1,8 +1,8 @@
 // constants
-import TOOLS from '../../constants';
+import { TOOLS } from '../../constants';
 
 class Pen {
-  public name = TOOLS.PEN;
+  public readonly name = TOOLS.PEN;
 }
 
 export default new Pen();
