@@ -1,17 +1,16 @@
 import './toolList.css';
 
 // entities
-import ActiveTool from './activeTool';
+import Emitter from '../../utils/emitter';
 
 // type guards
 import { isHTMLElement } from '../typeGuards';
 
 // constants
 import { TOOLS } from './constants';
+import { EVENTS } from '../constants';
 
 class ToolList {
-  public readonly activeTool = new ActiveTool();
-
   public readonly container = document.createElement('div');
 
   private activeToolContainer: HTMLElement | null = null;
@@ -37,7 +36,8 @@ class ToolList {
     }
 
     this.selectActiveToolContainer(toolContainer);
-    this.activeTool.set(TOOLS.PEN);
+
+    Emitter.emit(EVENTS.TOOL_CHANGE, TOOLS.PEN);
   }
 
   private onSelect: EventListener = async ({ target }: Event): Promise<void> => {
@@ -52,7 +52,8 @@ class ToolList {
     }
 
     this.selectActiveToolContainer(toolContainer);
-    this.activeTool.set(toolContainer.dataset.name as string);
+
+    Emitter.emit(EVENTS.TOOL_CHANGE, toolContainer.dataset.name as string);
   };
 
   private renderToolContainers(): void {

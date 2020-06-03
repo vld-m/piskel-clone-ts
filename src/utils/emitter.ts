@@ -1,11 +1,8 @@
 // constants
 import { EVENTS } from '../components/constants';
 
-// interfaces
-import { CanvasListeners } from '../components/interfaces';
-
 type Events = {
-  [EVENTS.TOOL_CHANGE]: CanvasListeners;
+  [EVENTS.TOOL_CHANGE]: string;
 };
 
 class EventEmitter<T> {
