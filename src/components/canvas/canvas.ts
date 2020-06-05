@@ -1,50 +1,48 @@
 import './canvas.css';
 
-// entities
-import ActiveTool from '../toolList/tool/activeTool';
-import Grid from './grid';
+// interfaces
+import { CanvasListeners } from '../interfaces';
 
 class Canvas {
-  public readonly container = document.createElement('div');
-
   private canvas = document.createElement('canvas');
+
+  private container = document.createElement('div');
 
   private context = this.canvas.getContext('2d', { desynchronized: true });
 
-  private grid: Grid | null = null;
-
-  private tool = new ActiveTool();
-
   constructor() {
     this.setContainerAttributes();
-    this.addListenersToWindow();
-    this.addListenersToCanvas();
     this.renderCanvas();
   }
 
-  private addListenersToCanvas(): void {
-    this.canvas.addEventListener('contextmenu', this.onContextMenu);
+  public getCanvasBasedCoordinates({ clientX, clientY }: MouseEvent): { x: number; y: number } {
+    return {
+      x: clientX - this.canvas.offsetLeft,
+      y: clientY - this.canvas.offsetTop,
+    };
   }
 
-  private onContextMenu = (event: Event): void => {
-    event.preventDefault();
-  };
-
-  private addListenersToWindow(): void {
-    window.addEventListener('resize', this.onResize);
-    window.addEventListener('DOMContentLoaded', (event: Event) => {
-      this.onResize(event);
-
-      this.grid = new Grid(this.canvas);
-    });
+  public getContainer(): HTMLDivElement {
+    return this.container;
   }
 
-  private onResize: EventListener = (): void => {
-    const side = this.container.clientHeight;
+  public getContext(): CanvasRenderingContext2D | null {
+    return this.context;
+  }
 
-    this.canvas.width = side;
-    this.canvas.height = side;
-  };
+  public getHeight(): number {
+    return this.canvas.height;
+  }
+
+  public resize(size: number): void {
+    this.canvas.width = size;
+    this.canvas.height = size;
+  }
+
+  public subscribe({ onContextMenu, onMouseDown }: CanvasListeners): void {
+    this.canvas.addEventListener('contextmenu', onContextMenu);
+    this.canvas.addEventListener('mousedown', onMouseDown);
+  }
 
   private renderCanvas(): void {
     this.canvas.classList.add('canvas');
@@ -61,4 +59,4 @@ class Canvas {
   }
 }
 
-export default new Canvas();
+export default Canvas;

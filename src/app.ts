@@ -1,7 +1,9 @@
 import './app.css';
 
-import canvas from './components/canvas/canvas';
+import Grid from './components/canvas/grid';
+
+const grid = new Grid();
 
 const main = document.querySelector('main') as HTMLElement;
 
-main.append(canvas.container);
+main.append(grid.container);

@@ -7,15 +7,22 @@ import Emitter from '../../../utils/emitter';
 import { EVENTS } from '../../constants';
 
 // interfaces
+import { Cell } from '../../interfaces';
 import { Tool } from './interfaces';
 
 class ActiveTool {
-  public tool: Tool | null = null;
-
   private cache: { [name: string]: Tool } = {};
+
+  private tool: Tool | null = null;
 
   constructor() {
     Emitter.on(EVENTS.TOOL_CHANGE, this.set);
+  }
+
+  public treat(context: CanvasRenderingContext2D, cell: Cell): void {
+    if (this.tool) {
+      this.tool.treat(context, cell);
+    }
   }
 
   private set = async (name: string): Promise<void> => {
