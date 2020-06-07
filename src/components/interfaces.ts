@@ -1,5 +1,4 @@
 interface CanvasListeners {
-  onContextMenu: EventListener;
   onMouseDown: EventListener;
   // onMouseMove: EventListener;
   // onMouseLeave: EventListener;
@@ -7,8 +6,8 @@ interface CanvasListeners {
 }
 
 interface Cell {
+  color: string;
   topLeftX: number;
   topLeftY: number;
-  color: string;
 }
 export { CanvasListeners, Cell };

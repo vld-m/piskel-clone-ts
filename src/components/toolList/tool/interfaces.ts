@@ -3,7 +3,7 @@ import { Cell } from '../../interfaces';
 
 interface Tool {
   name: string;
-  treat(context: CanvasRenderingContext2D, cell: Cell): void;
+  onMouseDown(grid: Cell[], cell: Cell, color: string): void;
 }
 
 export { Tool };

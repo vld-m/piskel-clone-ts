@@ -10,6 +10,8 @@ import { EVENTS } from '../../constants';
 import { Cell } from '../../interfaces';
 import { Tool } from './interfaces';
 
+const CURRENT_COLOR = '#bdb76b';
+
 class ActiveTool {
   private cache: { [name: string]: Tool } = {};
 
@@ -17,12 +19,15 @@ class ActiveTool {
 
   constructor() {
     Emitter.on(EVENTS.TOOL_CHANGE, this.set);
+    Emitter.emit(EVENTS.TOOL_CHANGE, 'pen');
   }
 
-  public treat(context: CanvasRenderingContext2D, cell: Cell): void {
-    if (this.tool) {
-      this.tool.treat(context, cell);
+  public onMouseDown(grid: Cell[], cell: Cell): void {
+    if (this.tool === null) {
+      return;
     }
+
+    this.tool.onMouseDown(grid, cell, CURRENT_COLOR);
   }
 
   private set = async (name: string): Promise<void> => {
