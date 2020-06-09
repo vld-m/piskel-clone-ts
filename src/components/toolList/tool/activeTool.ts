@@ -7,8 +7,7 @@ import Emitter from '../../../utils/emitter';
 import { EVENTS } from '../../constants';
 
 // interfaces
-import { Cell } from '../../interfaces';
-import { Tool } from './interfaces';
+import { GetCell, MouseActionCoordinates, Tool } from '../../interfaces';
 
 const CURRENT_COLOR = '#bdb76b';
 
@@ -22,12 +21,20 @@ class ActiveTool {
     Emitter.emit(EVENTS.TOOL_CHANGE, 'pen');
   }
 
-  public onMouseDown(grid: Cell[], cell: Cell): void {
+  public onMouseDown(coordinates: MouseActionCoordinates, getCell: GetCell): void {
     if (this.tool === null) {
       return;
     }
 
-    this.tool.onMouseDown(grid, cell, CURRENT_COLOR);
+    this.tool.onMouseDown(coordinates, getCell, CURRENT_COLOR);
+  }
+
+  public onMouseMove(coordinates: MouseActionCoordinates, getCell: GetCell): void {
+    if (this.tool === null) {
+      return;
+    }
+
+    this.tool.onMouseMove(coordinates, getCell, CURRENT_COLOR);
   }
 
   private set = async (name: string): Promise<void> => {

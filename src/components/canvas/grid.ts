@@ -3,7 +3,7 @@ import ActiveTool from '../toolList/tool/activeTool';
 import Canvas from './canvas';
 
 // interfaces
-import { CanvasListeners, Cell } from '../interfaces';
+import { CanvasListeners, Cell, Coordinates, MouseActionCoordinates } from '../interfaces';
 
 const CELLS_ON_SIDE = 12;
 
@@ -17,6 +17,10 @@ class Grid {
   private cellSize = this.canvas.getHeight() / CELLS_ON_SIDE;
 
   private grid: Cell[] = [];
+
+  private isMouseDown = false;
+
+  private latestCoordinates: Coordinates = { x: 0, y: 0 };
 
   constructor() {
     this.container = this.canvas.getContainer();
@@ -58,32 +62,66 @@ class Grid {
   private getCanvasListeners(): CanvasListeners {
     return {
       onMouseDown: this.onMouseDown,
+      onMouseMove: this.onMouseMove,
+      onMouseUp: this.onMouseUp,
     };
   }
 
-  private getCell(event: MouseEvent): Cell | undefined {
-    const { x, y } = this.canvas.getCanvasBasedCoordinates(event);
-
+  private getCell = ({ x, y }: Coordinates): Cell => {
     const row = Math.floor(x / this.cellSize);
     const column = Math.floor(y / this.cellSize);
 
     return this.grid[row + column * CELLS_ON_SIDE];
+  };
+
+  private getMouseActionCoordinates(event: MouseEvent): MouseActionCoordinates {
+    return {
+      start: this.latestCoordinates,
+      end: this.canvas.getCanvasBasedCoordinates(event as MouseEvent),
+    };
   }
 
   private onMouseDown: EventListener = (event: Event): void => {
-    if (!(event instanceof MouseEvent)) {
-      return;
-    }
+    this.isMouseDown = true;
 
-    const cell = this.getCell(event);
+    const coordinates = this.getMouseActionCoordinates(event as MouseEvent);
 
-    if (cell === undefined) {
-      return;
-    }
+    this.activeTool.onMouseDown(coordinates, this.getCell);
 
-    this.activeTool.onMouseDown(this.grid, cell);
+    this.latestCoordinates = coordinates.end;
 
     this.repaint();
+  };
+
+  private isInsideSameCell(coordinates: MouseActionCoordinates): boolean {
+    const startCell = this.getCell(coordinates.start);
+    const endCell = this.getCell(coordinates.end);
+
+    return startCell === endCell;
+  }
+
+  private onMouseMove: EventListener = (event: Event): void => {
+    if (!this.isMouseDown) {
+      return;
+    }
+
+    const coordinates = this.getMouseActionCoordinates(event as MouseEvent);
+
+    if (this.isInsideSameCell(coordinates)) {
+      return;
+    }
+
+    this.latestCoordinates = coordinates.end;
+
+    this.activeTool.onMouseMove(coordinates, this.getCell);
+
+    this.repaint();
+  };
+
+  private onMouseUp: EventListener = (): void => {
+    this.latestCoordinates = { x: 0, y: 0 };
+
+    this.isMouseDown = false;
   };
 
   private onResize: EventListener = (): void => {

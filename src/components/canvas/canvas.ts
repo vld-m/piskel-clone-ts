@@ -1,7 +1,7 @@
 import './canvas.css';
 
 // interfaces
-import { CanvasListeners, Cell } from '../interfaces';
+import { CanvasListeners, Cell, Coordinates } from '../interfaces';
 
 class Canvas {
   private canvas = document.createElement('canvas');
@@ -16,7 +16,7 @@ class Canvas {
       .renderCanvas();
   }
 
-  public getCanvasBasedCoordinates({ clientX, clientY }: MouseEvent): { x: number; y: number } {
+  public getCanvasBasedCoordinates({ clientX, clientY }: MouseEvent): Coordinates {
     return {
       x: clientX - this.canvas.offsetLeft,
       y: clientY - this.canvas.offsetTop,
@@ -49,8 +49,10 @@ class Canvas {
     this.canvas.height = size;
   }
 
-  public subscribe({ onMouseDown }: CanvasListeners): void {
+  public subscribe({ onMouseDown, onMouseMove, onMouseUp }: CanvasListeners): void {
     this.canvas.addEventListener('mousedown', onMouseDown);
+    this.canvas.addEventListener('mousemove', onMouseMove);
+    this.canvas.addEventListener('mouseup', onMouseUp);
   }
 
   private addCanvasListeners(): Canvas {
