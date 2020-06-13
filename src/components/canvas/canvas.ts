@@ -1,7 +1,7 @@
 import './canvas.css';
 
 // interfaces
-import { CanvasListeners, Cell, Coordinates } from '../interfaces';
+import { CanvasListeners, Cell } from '../interfaces';
 
 class Canvas {
   private canvas = document.createElement('canvas');
@@ -11,16 +11,13 @@ class Canvas {
   private context = this.canvas.getContext('2d', { desynchronized: true });
 
   constructor() {
-    this.setContainerAttributes()
-      .addCanvasListeners()
-      .renderCanvas();
+    this.setContainerAttributes();
+    this.addCanvasListeners();
+    this.renderCanvas();
   }
 
-  public getCanvasBasedCoordinates({ clientX, clientY }: MouseEvent): Coordinates {
-    return {
-      x: clientX - this.canvas.offsetLeft,
-      y: clientY - this.canvas.offsetTop,
-    };
+  public getCanvas(): HTMLCanvasElement {
+    return this.canvas;
   }
 
   public getContainer(): HTMLDivElement {
@@ -55,28 +52,22 @@ class Canvas {
     this.canvas.addEventListener('mouseup', onMouseUp);
   }
 
-  private addCanvasListeners(): Canvas {
+  private addCanvasListeners(): void {
     this.canvas.addEventListener('contextmenu', this.onContextMenu);
-
-    return this;
   }
 
   private onContextMenu: EventListener = (event: Event): void => {
     event.preventDefault();
   };
 
-  private renderCanvas(): Canvas {
+  private renderCanvas(): void {
     this.canvas.classList.add('canvas');
 
     this.container.append(this.canvas);
-
-    return this;
   }
 
-  private setContainerAttributes(): Canvas {
+  private setContainerAttributes(): void {
     this.container.classList.add('container', 'container_canvas');
-
-    return this;
   }
 }
 

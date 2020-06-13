@@ -1,10 +1,9 @@
-/* eslint-disable consistent-return */
-import { Coordinates, MouseActionCoordinates } from '../../../interfaces';
+import { Coordinates, MoveCoordinates } from '../../../interfaces';
 
 class Line {
   private precision = 1;
 
-  public plot({ start, end }: MouseActionCoordinates): Coordinates[] {
+  public plot({ start, end }: MoveCoordinates): Coordinates[] {
     const { x: x0, y: y0 } = start;
     const { x: x1, y: y1 } = end;
 

@@ -1,54 +1,46 @@
 import './tool.css';
 
 // entities
-import Emitter from '../../../utils/emitter';
+import emitter from '../../../utils/emitter';
+import pen from './pen/pen';
 
 // constants
 import { EVENTS } from '../../constants';
 
 // interfaces
-import { GetCell, MouseActionCoordinates, Tool } from '../../interfaces';
+import { Cell, Coordinates, MoveCoordinates, Tool } from '../../interfaces';
 
 const CURRENT_COLOR = '#bdb76b';
 
 class ActiveTool {
+  private activeTool: Tool = pen;
+
   private cache: { [name: string]: Tool } = {};
 
-  private tool: Tool | null = null;
-
   constructor() {
-    Emitter.on(EVENTS.TOOL_CHANGE, this.set);
-    Emitter.emit(EVENTS.TOOL_CHANGE, 'pen');
+    emitter.on(EVENTS.TOOL_CHANGE, this.setActiveTool);
   }
 
-  public onMouseDown(coordinates: MouseActionCoordinates, getCell: GetCell): void {
-    if (this.tool === null) {
-      return;
-    }
-
-    this.tool.onMouseDown(coordinates, getCell, CURRENT_COLOR);
+  public onMouseDown(cell: Cell): { isModified: boolean; cell?: Cell } {
+    return this.activeTool.onMouseDown(cell, CURRENT_COLOR);
   }
 
-  public onMouseMove(coordinates: MouseActionCoordinates, getCell: GetCell): void {
-    if (this.tool === null) {
-      return;
-    }
-
-    this.tool.onMouseMove(coordinates, getCell, CURRENT_COLOR);
+  public onMouseMove(actionCoordinates: MoveCoordinates): Coordinates[] {
+    return this.activeTool.onMouseMove(actionCoordinates);
   }
 
-  private set = async (name: string): Promise<void> => {
+  private setActiveTool = async (name: string): Promise<void> => {
     if (this.cache[name]) {
-      this.tool = this.cache[name];
+      this.activeTool = this.cache[name];
     } else {
       const { default: tool }: { default: Tool } = await import(
         /* webpackChunkName: "[request]" */ `./${name}/${name}.ts`
       );
 
       this.cache[tool.name] = tool;
-      this.tool = tool;
+      this.activeTool = tool;
     }
   };
 }
 
-export default ActiveTool;
+export default new ActiveTool();

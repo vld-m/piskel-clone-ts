@@ -19,25 +19,10 @@ class ToolList {
     this.setContainerAttributes();
     this.addListenersToContainer();
     this.renderToolContainers();
-    this.loadInitialTool();
   }
 
   private addListenersToContainer(): void {
     this.container.addEventListener('click', this.onSelect);
-  }
-
-  private async loadInitialTool(): Promise<void> {
-    const toolContainer = Array.from(this.container.children).find(
-      (child) => (child as HTMLElement).dataset.name === TOOLS.PEN
-    );
-
-    if (toolContainer === undefined || !isHTMLElement(toolContainer)) {
-      return;
-    }
-
-    this.selectActiveToolContainer(toolContainer);
-
-    Emitter.emit(EVENTS.TOOL_CHANGE, TOOLS.PEN);
   }
 
   private onSelect: EventListener = async ({ target }: Event): Promise<void> => {
@@ -64,6 +49,10 @@ class ToolList {
 
       toolContainer.classList.add('tool', `tool_${name}`);
       toolContainer.dataset.name = `${name}`;
+
+      if (name === TOOLS.PEN) {
+        this.selectActiveToolContainer(toolContainer);
+      }
 
       return toolContainer;
     };

@@ -16,19 +16,15 @@ interface Coordinates {
   y: number;
 }
 
-interface GetCell {
-  (coordinates: Coordinates): Cell;
-}
-
-interface MouseActionCoordinates {
+interface MoveCoordinates {
   start: Coordinates;
   end: Coordinates;
 }
 
 interface Tool {
   name: string;
-  onMouseDown(coordinates: MouseActionCoordinates, getCell: GetCell, color: string): void;
-  onMouseMove(coordinates: MouseActionCoordinates, getCell: GetCell, color: string): void;
+  onMouseDown(cell: Cell, color: string): { isModified: boolean; cell?: Cell };
+  onMouseMove(coordinates: MoveCoordinates): Coordinates[];
 }
 
-export { CanvasListeners, Cell, Coordinates, GetCell, MouseActionCoordinates, Tool };
+export { CanvasListeners, Cell, Coordinates, MoveCoordinates, Tool };

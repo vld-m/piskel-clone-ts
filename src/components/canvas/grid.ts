@@ -1,49 +1,76 @@
 // entities
-import ActiveTool from '../toolList/tool/activeTool';
 import Canvas from './canvas';
 
 // interfaces
-import { CanvasListeners, Cell, Coordinates, MouseActionCoordinates } from '../interfaces';
+import { CanvasListeners, Cell, Coordinates, MoveCoordinates } from '../interfaces';
 
 const CELLS_ON_SIDE = 12;
 
 class Grid {
-  public readonly container: HTMLDivElement;
-
-  private activeTool = new ActiveTool();
-
   private canvas = new Canvas();
 
   private cellSize = this.canvas.getHeight() / CELLS_ON_SIDE;
 
   private grid: Cell[] = [];
 
-  private isMouseDown = false;
-
-  private latestCoordinates: Coordinates = { x: 0, y: 0 };
+  private previousActionEndCoordinates: Coordinates = { x: 0, y: 0 };
 
   constructor() {
-    this.container = this.canvas.getContainer();
-
-    this.addCanvasListeners()
-      .addWindowListeners()
-      .createGrid();
+    this.addWindowListeners();
+    this.createGrid();
   }
 
-  private addCanvasListeners(): Grid {
-    this.canvas.subscribe(this.getCanvasListeners());
-
-    return this;
+  public addCanvasListeners(listeners: CanvasListeners): void {
+    this.canvas.subscribe(listeners);
   }
 
-  private addWindowListeners(): Grid {
+  public getCanvasContainer(): HTMLDivElement {
+    return this.canvas.getContainer();
+  }
+
+  public getCell({ x, y }: Coordinates): Cell {
+    const row = Math.floor(x / this.cellSize);
+    const column = Math.floor(y / this.cellSize);
+
+    return this.grid[row + column * CELLS_ON_SIDE];
+  }
+
+  public getCoordinates({ clientX, clientY }: MouseEvent): Coordinates {
+    const { offsetTop, offsetLeft } = this.canvas.getCanvas();
+
+    return {
+      x: clientX - offsetLeft,
+      y: clientY - offsetTop,
+    };
+  }
+
+  public getMoveCoordinates(event: MouseEvent): MoveCoordinates {
+    return {
+      start: this.previousActionEndCoordinates,
+      end: this.getCoordinates(event),
+    };
+  }
+
+  public isMoveInsideCell({ start, end }: MoveCoordinates): boolean {
+    return this.getCell(start) === this.getCell(end);
+  }
+
+  public repaint(): void {
+    this.grid.forEach((cell) => {
+      this.canvas.paint(cell, this.cellSize);
+    });
+  }
+
+  public setPreviousActionEndCoordinates(coordinates: Coordinates): void {
+    this.previousActionEndCoordinates = coordinates;
+  }
+
+  private addWindowListeners(): void {
     window.addEventListener('DOMContentLoaded', this.onResize);
     window.addEventListener('resize', this.onResize);
-
-    return this;
   }
 
-  private createGrid(): Grid {
+  private createGrid(): void {
     for (let row = 0; row < CELLS_ON_SIDE; row += 1) {
       for (let column = 0; column < CELLS_ON_SIDE; column += 1) {
         const cell: Cell = {
@@ -55,92 +82,19 @@ class Grid {
         this.grid.push(cell);
       }
     }
-
-    return this;
   }
-
-  private getCanvasListeners(): CanvasListeners {
-    return {
-      onMouseDown: this.onMouseDown,
-      onMouseMove: this.onMouseMove,
-      onMouseUp: this.onMouseUp,
-    };
-  }
-
-  private getCell = ({ x, y }: Coordinates): Cell => {
-    const row = Math.floor(x / this.cellSize);
-    const column = Math.floor(y / this.cellSize);
-
-    return this.grid[row + column * CELLS_ON_SIDE];
-  };
-
-  private getMouseActionCoordinates(event: MouseEvent): MouseActionCoordinates {
-    return {
-      start: this.latestCoordinates,
-      end: this.canvas.getCanvasBasedCoordinates(event as MouseEvent),
-    };
-  }
-
-  private onMouseDown: EventListener = (event: Event): void => {
-    this.isMouseDown = true;
-
-    const coordinates = this.getMouseActionCoordinates(event as MouseEvent);
-
-    this.activeTool.onMouseDown(coordinates, this.getCell);
-
-    this.latestCoordinates = coordinates.end;
-
-    this.repaint();
-  };
-
-  private isInsideSameCell(coordinates: MouseActionCoordinates): boolean {
-    const startCell = this.getCell(coordinates.start);
-    const endCell = this.getCell(coordinates.end);
-
-    return startCell === endCell;
-  }
-
-  private onMouseMove: EventListener = (event: Event): void => {
-    if (!this.isMouseDown) {
-      return;
-    }
-
-    const coordinates = this.getMouseActionCoordinates(event as MouseEvent);
-
-    if (this.isInsideSameCell(coordinates)) {
-      return;
-    }
-
-    this.latestCoordinates = coordinates.end;
-
-    this.activeTool.onMouseMove(coordinates, this.getCell);
-
-    this.repaint();
-  };
-
-  private onMouseUp: EventListener = (): void => {
-    this.latestCoordinates = { x: 0, y: 0 };
-
-    this.isMouseDown = false;
-  };
 
   private onResize: EventListener = (): void => {
-    const size = Math.min(this.container.clientWidth, this.container.clientHeight);
+    const { clientWidth, clientHeight } = this.canvas.getContainer();
+    const size = Math.min(clientWidth, clientHeight);
 
     this.canvas.resize(size);
 
-    this.resize(size).repaint();
+    this.resize(size);
+    this.repaint();
   };
 
-  private repaint(): Grid {
-    this.grid.forEach((cell) => {
-      this.canvas.paint(cell, this.cellSize);
-    });
-
-    return this;
-  }
-
-  private resize(size: number): Grid {
+  private resize(size: number): void {
     const ratio = size / (this.cellSize * CELLS_ON_SIDE);
 
     this.grid.forEach((cell) => {
@@ -149,9 +103,7 @@ class Grid {
     });
 
     this.cellSize *= ratio;
-
-    return this;
   }
 }
 
-export default Grid;
+export default new Grid();
