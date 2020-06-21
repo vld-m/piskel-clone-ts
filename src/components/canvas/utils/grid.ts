@@ -1,15 +1,15 @@
 // entities
-import Canvas from './canvas';
+import Canvas from '../canvas';
 
 // interfaces
-import { CanvasListeners, Cell, Coordinates, MoveCoordinates } from '../interfaces';
+import { CanvasListeners, Cell, Coordinates, MoveCoordinates } from '../../interfaces';
 
 const CELLS_ON_SIDE = 12;
 
 class Grid {
   private canvas = new Canvas();
 
-  private cellSize = this.canvas.getHeight() / CELLS_ON_SIDE;
+  private cellSize = this.canvas.getCanvas().height / CELLS_ON_SIDE;
 
   private grid: Cell[] = [];
 
@@ -24,10 +24,6 @@ class Grid {
     this.canvas.subscribe(listeners);
   }
 
-  public getCanvasContainer(): HTMLDivElement {
-    return this.canvas.getContainer();
-  }
-
   public getCell({ x, y }: Coordinates): Cell {
     const row = Math.floor(x / this.cellSize);
     const column = Math.floor(y / this.cellSize);
@@ -35,13 +31,17 @@ class Grid {
     return this.grid[row + column * CELLS_ON_SIDE];
   }
 
-  public getCoordinates({ clientX, clientY }: MouseEvent): Coordinates {
-    const { offsetTop, offsetLeft } = this.canvas.getCanvas();
+  public getContainer(): HTMLDivElement {
+    return this.canvas.getContainer();
+  }
 
-    return {
-      x: clientX - offsetLeft,
-      y: clientY - offsetTop,
-    };
+  public getCoordinates({ clientX, clientY }: MouseEvent): Coordinates {
+    const { offsetTop, offsetLeft } = this.canvas.getOffsetProperties();
+
+    const xDiff = clientX - offsetLeft;
+    const yDiff = clientY - offsetTop;
+
+    return { x: xDiff, y: yDiff };
   }
 
   public getMoveCoordinates(event: MouseEvent): MoveCoordinates {
@@ -51,8 +51,12 @@ class Grid {
     };
   }
 
-  public isMoveInsideCell({ start, end }: MoveCoordinates): boolean {
-    return this.getCell(start) === this.getCell(end);
+  public getSize(): number {
+    return this.canvas.getSize();
+  }
+
+  public highlight(): void {
+    this.canvas.highlight();
   }
 
   public repaint(): void {

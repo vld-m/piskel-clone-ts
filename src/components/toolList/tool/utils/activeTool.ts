@@ -1,16 +1,16 @@
-import './tool.css';
+import '../tool.css';
 
 // entities
-import emitter from '../../../utils/emitter';
-import pen from './pen/pen';
+import emitter from '../../../../utils/emitter';
+import pen from '../pen/pen';
 
 // constants
-import { EVENTS } from '../../constants';
+import { EVENTS } from '../../../constants';
 
 // interfaces
-import { Cell, Coordinates, MoveCoordinates, Tool } from '../../interfaces';
+import { Cell, Coordinates, MoveCoordinates, Tool } from '../../../interfaces';
 
-const CURRENT_COLOR = '#bdb76b';
+const CURRENT_COLOR = '#ff6347';
 
 class ActiveTool {
   private activeTool: Tool = pen;
@@ -25,8 +25,8 @@ class ActiveTool {
     return this.activeTool.onMouseDown(cell, CURRENT_COLOR);
   }
 
-  public onMouseMove(actionCoordinates: MoveCoordinates): Coordinates[] {
-    return this.activeTool.onMouseMove(actionCoordinates);
+  public onMouseMove(actionCoordinates: MoveCoordinates, gridSize: number): Coordinates[] {
+    return this.activeTool.onMouseMove(actionCoordinates, gridSize);
   }
 
   private setActiveTool = async (name: string): Promise<void> => {

@@ -1,7 +1,7 @@
 interface CanvasListeners {
   onMouseDown: EventListener;
+  onMouseLeave: EventListener;
   onMouseMove: EventListener;
-  // onMouseLeave: EventListener;
   onMouseUp: EventListener;
 }
 
@@ -24,7 +24,7 @@ interface MoveCoordinates {
 interface Tool {
   name: string;
   onMouseDown(cell: Cell, color: string): { isModified: boolean; cell?: Cell };
-  onMouseMove(coordinates: MoveCoordinates): Coordinates[];
+  onMouseMove(coordinates: MoveCoordinates, gridSize: number): Coordinates[];
 }
 
 export { CanvasListeners, Cell, Coordinates, MoveCoordinates, Tool };

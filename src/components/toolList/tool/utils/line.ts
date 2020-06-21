@@ -1,9 +1,13 @@
 import { Coordinates, MoveCoordinates } from '../../../interfaces';
 
 class Line {
+  private gridSize = 1;
+
   private precision = 1;
 
-  public plot({ start, end }: MoveCoordinates): Coordinates[] {
+  public plot({ start, end }: MoveCoordinates, gridSize: number): Coordinates[] {
+    this.gridSize = gridSize;
+
     const { x: x0, y: y0 } = start;
     const { x: x1, y: y1 } = end;
 
@@ -27,6 +31,10 @@ class Line {
 
     // up
     return this.plotVertical(end, start);
+  }
+
+  private isInsideGrid(x: number, y: number): boolean {
+    return x >= 0 && y >= 0 && x < this.gridSize && y < this.gridSize;
   }
 
   private plotHorizontal(
@@ -56,7 +64,9 @@ class Line {
 
       diff += 2 * dy;
 
-      line.push({ x, y });
+      if (this.isInsideGrid(x, y)) {
+        line.push({ x, y });
+      }
     }
 
     return line;
@@ -89,7 +99,9 @@ class Line {
 
       diff += 2 * dx;
 
-      line.push({ x, y });
+      if (this.isInsideGrid(x, y)) {
+        line.push({ x, y });
+      }
     }
 
     return line;

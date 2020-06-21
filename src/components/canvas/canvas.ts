@@ -28,8 +28,23 @@ class Canvas {
     return this.context;
   }
 
-  public getHeight(): number {
-    return this.canvas.height;
+  public getOffsetProperties(): { offsetTop: number; offsetLeft: number } {
+    return {
+      offsetTop: this.canvas.offsetTop,
+      offsetLeft: this.canvas.offsetLeft,
+    };
+  }
+
+  public getSize(): number {
+    return Math.min(this.container.clientWidth, this.container.clientHeight);
+  }
+
+  public highlight(): void {
+    this.canvas.classList.add('canvas_active');
+
+    setTimeout(() => {
+      this.canvas.classList.remove('canvas_active');
+    }, 250);
   }
 
   public paint({ color, topLeftX, topLeftY }: Cell, size: number): void {
@@ -46,8 +61,9 @@ class Canvas {
     this.canvas.height = size;
   }
 
-  public subscribe({ onMouseDown, onMouseMove, onMouseUp }: CanvasListeners): void {
+  public subscribe({ onMouseDown, onMouseLeave, onMouseMove, onMouseUp }: CanvasListeners): void {
     this.canvas.addEventListener('mousedown', onMouseDown);
+    this.canvas.addEventListener('mouseleave', onMouseLeave);
     this.canvas.addEventListener('mousemove', onMouseMove);
     this.canvas.addEventListener('mouseup', onMouseUp);
   }

@@ -1,21 +1,20 @@
 import './app.css';
 
-import activeTool from './components/toolList/tool/activeTool';
-import grid from './components/canvas/grid';
+import activeTool from './components/toolList/tool/utils/activeTool';
+import grid from './components/canvas/utils/grid';
+
+import { Cell } from './components/interfaces';
 
 const main = document.querySelector('main') as HTMLElement;
 
 let isMouseDown = false;
 
-main.append(grid.getCanvasContainer());
-
 function onMouseDown(event: Event): void {
   isMouseDown = true;
 
   const downCoordinates = grid.getCoordinates(event as MouseEvent);
-  const cell = grid.getCell(downCoordinates);
-
-  const { isModified } = activeTool.onMouseDown(cell);
+  const targetCell = grid.getCell(downCoordinates);
+  const { isModified } = activeTool.onMouseDown(targetCell);
 
   if (isModified) {
     grid.repaint();
@@ -31,26 +30,37 @@ function onMouseMove(event: Event): void {
 
   const moveCoordinates = grid.getMoveCoordinates(event as MouseEvent);
 
-  if (grid.isMoveInsideCell(moveCoordinates)) {
-    return;
-  }
+  const processedCoordinates = activeTool.onMouseMove(moveCoordinates, grid.getSize());
+  const processedCells = processedCoordinates.reduce<Cell[]>((cells, coordinates) => {
+    const targetCell = grid.getCell(coordinates);
+    const { isModified, cell } = activeTool.onMouseDown(targetCell);
 
-  const processedCoordinates = activeTool.onMouseMove(moveCoordinates);
-  const processedCells = processedCoordinates.map((coordinates) => {
-    const cell = grid.getCell(coordinates);
+    return isModified && cell ? [...cells, cell] : cells;
+  }, []);
 
-    return activeTool.onMouseDown(cell);
-  });
-
-  if (processedCells.some(({ isModified }) => isModified)) {
+  if (processedCells.length > 0) {
     grid.repaint();
   }
 
   grid.setPreviousActionEndCoordinates(moveCoordinates.end);
 }
 
+function onMouseLeave(event: Event): void {
+  if (!isMouseDown) {
+    return;
+  }
+
+  grid.highlight();
+
+  onMouseMove(event);
+
+  isMouseDown = false;
+}
+
 function onMouseUp(): void {
   isMouseDown = false;
 }
 
-grid.addCanvasListeners({ onMouseDown, onMouseMove, onMouseUp });
+main.append(grid.getContainer());
+
+grid.addCanvasListeners({ onMouseDown, onMouseLeave, onMouseMove, onMouseUp });
