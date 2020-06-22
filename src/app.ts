@@ -1,6 +1,7 @@
 import './app.css';
 
 import activeTool from './components/toolList/tool/utils/activeTool';
+import frameList from './components/frameList/frameList';
 import grid from './components/canvas/utils/grid';
 
 import { Cell } from './components/interfaces';
@@ -61,6 +62,7 @@ function onMouseUp(): void {
   isMouseDown = false;
 }
 
+main.append(frameList.container);
 main.append(grid.getContainer());
 
 grid.addCanvasListeners({ onMouseDown, onMouseLeave, onMouseMove, onMouseUp });

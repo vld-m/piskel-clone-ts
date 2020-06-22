@@ -4,8 +4,8 @@
   height: 8vw;
   margin-bottom: 0.5vh;
   flex-shrink: 0;
-  border: 3px dashed #333333;
-  background-color: #bdb76b80;
+  border: 3px dashed #bdb76b;
+  background-color: #33333380;
 }
 
 .placeholder_hidden {

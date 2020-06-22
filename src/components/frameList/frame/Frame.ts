@@ -18,16 +18,19 @@ class Frame {
 
   private buttonMove = new Button(BUTTONS.MOVE);
 
+  private canvas = document.createElement('canvas');
+
   private index = document.createElement('div');
 
   constructor() {
     this.setContainerAttributes();
     this.renderIndex();
+    this.renderCanvas();
     this.renderButtons();
   }
 
   public deselect(): void {
-    this.container.classList.remove('frame_active');
+    this.container.classList.remove('frame__container_active');
   }
 
   public hideButtonsDeleteAndMove(): void {
@@ -36,11 +39,11 @@ class Frame {
   }
 
   public hideIndex(): void {
-    this.index.classList.add('index_hidden');
+    this.index.classList.add('frame__index_hidden');
   }
 
   public hide(): void {
-    this.container.classList.add('frame_hidden');
+    this.container.classList.add('frame__container_hidden');
   }
 
   public remove(): void {
@@ -48,7 +51,7 @@ class Frame {
   }
 
   public select(): void {
-    this.container.classList.add('frame_active');
+    this.container.classList.add('frame__container_active');
   }
 
   public setIndex(index: number): void {
@@ -61,11 +64,11 @@ class Frame {
   }
 
   public showIndex(): void {
-    this.index.classList.remove('index_hidden');
+    this.index.classList.remove('frame__index_hidden');
   }
 
   public show(): void {
-    this.container.classList.remove('frame_hidden');
+    this.container.classList.remove('frame__container_hidden');
   }
 
   public subscribe({ onDragEnter, onDragStart, onSelect, onCopy, onDelete }: FrameListeners): void {
@@ -92,9 +95,10 @@ class Frame {
     this.buttonDelete.unsubscribe(onDelete);
   }
 
-  private setContainerAttributes(): void {
-    this.container.classList.add('frame');
-    this.container.draggable = true;
+  private renderCanvas(): void {
+    this.canvas.classList.add('frame__canvas');
+
+    this.container.append(this.canvas);
   }
 
   private renderButtons(): void {
@@ -102,8 +106,15 @@ class Frame {
   }
 
   private renderIndex(): void {
-    this.index.classList.add('index');
+    this.index.classList.add('frame__index');
+
     this.container.append(this.index);
+  }
+
+  private setContainerAttributes(): void {
+    this.container.classList.add('frame__container');
+
+    this.container.draggable = true;
   }
 }
 

@@ -51,7 +51,7 @@ class FrameList {
     targetIndex: number;
   } {
     const targetIndex = this.frameList.findIndex(
-      (frame) => frame.container === target.closest('.frame')
+      (frame) => frame.container === target.closest('.frame__container')
     );
     const targetFrame = this.frameList[targetIndex];
 
