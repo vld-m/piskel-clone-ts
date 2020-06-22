@@ -40,10 +40,10 @@ class Canvas {
   }
 
   public highlight(): void {
-    this.canvas.classList.add('canvas_active');
+    this.canvas.classList.add('cavas__canvas_active');
 
     setTimeout(() => {
-      this.canvas.classList.remove('canvas_active');
+      this.canvas.classList.remove('cavas__canvas_active');
     }, 250);
   }
 
@@ -77,13 +77,13 @@ class Canvas {
   };
 
   private renderCanvas(): void {
-    this.canvas.classList.add('canvas');
+    this.canvas.classList.add('cavas__canvas');
 
     this.container.append(this.canvas);
   }
 
   private setContainerAttributes(): void {
-    this.container.classList.add('container', 'container_canvas');
+    this.container.classList.add('container', 'canvas__container');
   }
 }
 

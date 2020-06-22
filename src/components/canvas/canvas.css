@@ -1,15 +1,15 @@
-.container_canvas {
+.canvas__container {
   width: 61.5vw;
   align-items: center;
   background-color: #33333380;
 }
 
-.canvas {
+.cavas__canvas {
   background-color: #5d5d5d;
   background-image: url(./canvas.svg);
   image-rendering: pixelated;
 }
 
-.canvas_active {
+.cavas__canvas_active {
   border: 3px solid #bdb76b;
 }

@@ -71,7 +71,7 @@ class ToolList {
   }
 
   private setContainerAttributes(): void {
-    this.container.classList.add('container', 'container_tool-list');
+    this.container.classList.add('container', 'tool-list__container');
   }
 }
 

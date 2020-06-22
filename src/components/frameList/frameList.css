@@ -1,4 +1,4 @@
-.container_frame-list {
+.frame-list__container {
   width: 9vw;
   margin-right: 0.5vw;
   justify-content: flex-start;
@@ -6,15 +6,15 @@
   overflow-y: scroll;
 }
 
-.container_frame-list::-webkit-scrollbar {
+.frame-list__container::-webkit-scrollbar {
   -webkit-appearance: none;
   width: 0.5vw;
 }
 
-.container_frame-list::-webkit-scrollbar-thumb {
+.frame-list__container::-webkit-scrollbar-thumb {
   background-color: #333333;
 }
 
-.container_frame-list::-webkit-scrollbar-track {
+.frame-list__container::-webkit-scrollbar-track {
   background-color: #33333340;
 }

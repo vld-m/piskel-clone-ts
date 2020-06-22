@@ -1,4 +1,4 @@
-.button {
+.frame__button {
   position: absolute;
   width: 2vw;
   height: 2vw;
@@ -12,28 +12,36 @@
   cursor: pointer;
 }
 
-.button_frame-list_copy {
+.frame__button_hidden {
+  display: none;
+}
+
+.frame__button:active {
+  background-size: 2vw;
+}
+
+.frame__button_copy {
   bottom: 0;
   right: 0;
   background-image: url('./icons/copy.svg');
   background-size: 1.5vw;
 }
 
-.button_frame-list_delete {
+.frame__button_delete {
   top: 0;
   right: 0;
   background-image: url('./icons/delete.svg');
   background-size: 1.5vw;
 }
 
-.button_frame-list_move {
+.frame__button_move {
   bottom: 0;
   left: 0;
   background-image: url('./icons/move.svg');
   background-size: 1.5vw;
 }
 
-.button_frame-list_add {
+.frame-list__button_add {
   width: 8vw;
   height: 5vh;
   flex-shrink: 0;
@@ -45,18 +53,6 @@
   cursor: pointer;
 }
 
-.button_hidden {
-  display: none;
-}
-
-.button:active {
-  background-size: 2vw;
-}
-
-.button_frame-list_add:hover {
+.frame-list__button_add:hover {
   color: #bdb76b;
-}
-
-.frame:hover > .button {
-  opacity: 1;
 }

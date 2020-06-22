@@ -216,7 +216,7 @@ class FrameList {
   }
 
   private setContainerAttributes(): void {
-    this.container.classList.add('container', 'container_frame-list');
+    this.container.classList.add('container', 'frame-list__container');
   }
 
   private updateCurrentFrame(frame: Frame): void {

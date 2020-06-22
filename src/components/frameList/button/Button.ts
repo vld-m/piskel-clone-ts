@@ -21,16 +21,16 @@ class Button {
 
   static getClassList(buttonName: string): string[] {
     return buttonName === BUTTONS.ADD
-      ? [`button_frame-list_${buttonName}`]
-      : ['button', `button_frame-list_${buttonName}`];
+      ? [`frame-list__button_${buttonName}`]
+      : ['frame__button', `frame__button_${buttonName}`];
   }
 
   public hide(): void {
-    this.button.classList.add('button_hidden');
+    this.button.classList.add('frame__button_hidden');
   }
 
   public show(): void {
-    this.button.classList.remove('button_hidden');
+    this.button.classList.remove('frame__button_hidden');
   }
 
   public subscribe(listener: EventListener): void {

@@ -20,6 +20,10 @@
   border-color: #bdb76b;
 }
 
+.frame__container:hover > .frame__button {
+  opacity: 1;
+}
+
 .frame__canvas {
   width: calc(var(--frame-size) - (var(--border-width) * 2));
   height: calc(var(--frame-size) - (var(--border-width) * 2));
