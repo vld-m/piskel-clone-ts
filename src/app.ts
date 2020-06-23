@@ -1,8 +1,8 @@
 import './app.css';
 
-import activeTool from './components/toolList/tool/utils/activeTool';
+import activeTool from './utils/activeTool';
 import frameList from './components/frameList/frameList';
-import grid from './components/canvas/utils/grid';
+import grid from './utils/grid';
 
 import { Cell } from './components/interfaces';
 
@@ -17,8 +17,13 @@ function onMouseDown(event: Event): void {
   const targetCell = grid.getCell(downCoordinates);
   const { isModified } = activeTool.onMouseDown(targetCell);
 
-  if (isModified) {
-    grid.repaint();
+  const frameCanvas = frameList.currentFrame?.canvas;
+  const frameContext = frameCanvas?.getContext('2d');
+  const frameCavasLength = frameCanvas?.width;
+
+  if (isModified && frameContext && frameCavasLength) {
+    const image = grid.repaint();
+    // frameContext.drawImage(image, 0, 0, frameCavasLength, frameCavasLength);
   }
 
   grid.setPreviousActionEndCoordinates(downCoordinates);

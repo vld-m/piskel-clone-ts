@@ -1,7 +1,0 @@
-.tool_pen {
-  background-image: url(./pen.svg);
-}
-
-.cursor_pen {
-  cursor: url(./pen.svg) 0 32, auto;
-}

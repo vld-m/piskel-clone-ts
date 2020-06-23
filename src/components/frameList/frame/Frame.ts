@@ -10,7 +10,11 @@ import { BUTTONS } from '../constants';
 import { FrameListeners } from '../interfaces';
 
 class Frame {
+  public readonly canvas = document.createElement('canvas');
+
   public readonly container = document.createElement('div');
+
+  private context = this.canvas.getContext('2d');
 
   private buttonCopy = new Button(BUTTONS.COPY);
 
@@ -18,11 +22,10 @@ class Frame {
 
   private buttonMove = new Button(BUTTONS.MOVE);
 
-  private canvas = document.createElement('canvas');
-
   private index = document.createElement('div');
 
   constructor() {
+    this.addWindowListeners();
     this.setContainerAttributes();
     this.renderIndex();
     this.renderCanvas();
@@ -95,8 +98,20 @@ class Frame {
     this.buttonDelete.unsubscribe(onDelete);
   }
 
+  private addWindowListeners(): void {
+    window.addEventListener('DOMContentLoaded', this.onResize);
+    window.addEventListener('resize', this.onResize);
+  }
+
+  private onResize = (): void => {
+    const size = this.container.clientWidth;
+
+    this.canvas.width = size;
+    this.canvas.height = size;
+  };
+
   private renderCanvas(): void {
-    this.canvas.classList.add('frame__canvas');
+    setTimeout(() => this.onResize());
 
     this.container.append(this.canvas);
   }
@@ -109,6 +124,12 @@ class Frame {
     this.index.classList.add('frame__index');
 
     this.container.append(this.index);
+  }
+
+  private repaint(size: number, snap: ImageData): void {
+    if (this.context) {
+      this.context.putImageData(snap, 0, 0, 0, 0, size, size);
+    }
   }
 
   private setContainerAttributes(): void {

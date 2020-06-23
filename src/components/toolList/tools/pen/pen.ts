@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 // entites
-import line from '../utils/line';
+import line from '../../../../utils/line';
 
 // constants
 import { TOOLS } from '../../constants';

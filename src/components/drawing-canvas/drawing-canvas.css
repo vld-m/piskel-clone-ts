@@ -1,0 +1,9 @@
+.drawing-canvas__container {
+  width: 61.5vw;
+  align-items: center;
+  background-color: #33333380;
+}
+
+.drawing-canvas__canvas_highlighted {
+  border: 3px solid #bdb76b;
+}

@@ -1,4 +1,4 @@
-import './canvas.css';
+import './drawing-canvas.css';
 
 // interfaces
 import { CanvasListeners, Cell } from '../interfaces';
@@ -40,10 +40,10 @@ class Canvas {
   }
 
   public highlight(): void {
-    this.canvas.classList.add('cavas__canvas_active');
+    this.canvas.classList.add('drawing-canvas__canvas_highlighted');
 
     setTimeout(() => {
-      this.canvas.classList.remove('cavas__canvas_active');
+      this.canvas.classList.remove('drawing-canvas__canvas_highlighted');
     }, 250);
   }
 
@@ -77,13 +77,11 @@ class Canvas {
   };
 
   private renderCanvas(): void {
-    this.canvas.classList.add('cavas__canvas');
-
     this.container.append(this.canvas);
   }
 
   private setContainerAttributes(): void {
-    this.container.classList.add('container', 'canvas__container');
+    this.container.classList.add('container', 'drawing-canvas__container');
   }
 }
 

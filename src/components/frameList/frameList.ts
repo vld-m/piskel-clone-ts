@@ -17,9 +17,9 @@ import { FrameListeners } from './interfaces';
 class FrameList {
   public readonly container = document.createElement('div');
 
-  private buttonAdd = new Button(BUTTONS.ADD);
+  public currentFrame: Frame | null = null;
 
-  private currentFrame: Frame | null = null;
+  private buttonAdd = new Button(BUTTONS.ADD);
 
   private draggedFrame: Frame | null = null;
 
@@ -36,7 +36,7 @@ class FrameList {
   }
 
   private static isButton(target: HTMLElement): boolean {
-    return !!target.closest('.button');
+    return !!target.closest('.frame__button');
   }
 
   private addListenersToBody(): void {

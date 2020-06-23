@@ -1,4 +1,4 @@
-import { Coordinates, MoveCoordinates } from '../../../interfaces';
+import { Coordinates, MoveCoordinates } from '../components/interfaces';
 
 class Line {
   private gridSize = 1;

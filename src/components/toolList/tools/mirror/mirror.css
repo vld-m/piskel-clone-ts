@@ -1,0 +1,8 @@
+.tool_mirror {
+  background-image: url(./assets/mirror.svg);
+  background-size: 2.75vw;
+}
+
+.cursor_mirror {
+  cursor: url(./assets/mirror.svg) 16 16, auto;
+}

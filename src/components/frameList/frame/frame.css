@@ -1,15 +1,13 @@
 .frame__container {
-  --frame-size: 8vw;
-  --border-width: 3px;
   position: relative;
   display: flex;
-  width: var(--frame-size);
-  height: var(--frame-size);
+  width: 8vw;
+  height: 8vw;
   margin-bottom: 0.5vh;
   flex-shrink: 0;
   justify-content: center;
   align-items: center;
-  border: var(--border-width) solid #333333;
+  border: 3px solid #333333;
 }
 
 .frame__container_hidden {
@@ -22,14 +20,6 @@
 
 .frame__container:hover > .frame__button {
   opacity: 1;
-}
-
-.frame__canvas {
-  width: calc(var(--frame-size) - (var(--border-width) * 2));
-  height: calc(var(--frame-size) - (var(--border-width) * 2));
-  background-color: #5d5d5d;
-  background-image: url(../../canvas/canvas.svg);
-  image-rendering: pixelated;
 }
 
 .frame__index {

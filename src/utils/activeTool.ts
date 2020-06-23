@@ -1,14 +1,12 @@
-import '../tool.css';
-
 // entities
-import emitter from '../../../../utils/emitter';
-import pen from '../pen/pen';
+import emitter from './emitter';
+import pen from '../components/toolList/tools/pen/pen';
 
 // constants
-import { EVENTS } from '../../../constants';
+import { EVENTS } from '../components/constants';
 
 // interfaces
-import { Cell, Coordinates, MoveCoordinates, Tool } from '../../../interfaces';
+import { Cell, Coordinates, MoveCoordinates, Tool } from '../components/interfaces';
 
 const CURRENT_COLOR = '#ff6347';
 

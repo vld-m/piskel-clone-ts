@@ -31,6 +31,12 @@ main {
   justify-content: center;
 }
 
+canvas {
+  background-color: #5d5d5d;
+  background-image: url(./assets/canvas.svg);
+  image-rendering: pixelated;
+}
+
 button {
   outline: none;
 }

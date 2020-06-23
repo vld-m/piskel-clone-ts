@@ -23,21 +23,21 @@
 .frame__button_copy {
   bottom: 0;
   right: 0;
-  background-image: url('./icons/copy.svg');
+  background-image: url('./assets/copy.svg');
   background-size: 1.5vw;
 }
 
 .frame__button_delete {
   top: 0;
   right: 0;
-  background-image: url('./icons/delete.svg');
+  background-image: url('./assets/delete.svg');
   background-size: 1.5vw;
 }
 
 .frame__button_move {
   bottom: 0;
   left: 0;
-  background-image: url('./icons/move.svg');
+  background-image: url('./assets/move.svg');
   background-size: 1.5vw;
 }
 

@@ -1,4 +1,5 @@
 import './toolList.css';
+import './tools/tool.css';
 
 // entities
 import Emitter from '../../utils/emitter';

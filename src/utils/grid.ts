@@ -1,8 +1,8 @@
 // entities
-import Canvas from '../canvas';
+import Canvas from '../components/drawing-canvas/drawing-canvas';
 
 // interfaces
-import { CanvasListeners, Cell, Coordinates, MoveCoordinates } from '../../interfaces';
+import { CanvasListeners, Cell, Coordinates, MoveCoordinates } from '../components/interfaces';
 
 const CELLS_ON_SIDE = 12;
 
