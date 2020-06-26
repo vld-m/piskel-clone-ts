@@ -65,4 +65,4 @@ function onMouseUp(): void {
 main.append(frameList.container);
 main.append(grid.getContainer());
 
-grid.addCanvasListeners({ onMouseDown, onMouseLeave, onMouseMove, onMouseUp });
+grid.addBoardListeners({ onMouseDown, onMouseLeave, onMouseMove, onMouseUp });

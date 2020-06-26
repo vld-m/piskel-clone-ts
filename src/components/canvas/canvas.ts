@@ -4,9 +4,9 @@ import './canvas.css';
 import { Cell } from '../interfaces';
 
 class Canvas {
-  public canvas = document.createElement('canvas');
+  public readonly canvas = document.createElement('canvas');
 
-  public context = this.canvas.getContext('2d', { desynchronized: true });
+  public readonly context = this.canvas.getContext('2d', { desynchronized: true });
 
   constructor() {
     this.addCanvasListeners();

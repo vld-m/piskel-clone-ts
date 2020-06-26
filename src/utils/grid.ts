@@ -1,20 +1,15 @@
 // entities
-import DrawingCanvas from '../components/drawing-canvas/drawing-canvas';
+import Board from '../components/board/board';
 
 // interfaces
-import {
-  Cell,
-  Coordinates,
-  DrawingCanvasListeners,
-  MoveCoordinates,
-} from '../components/interfaces';
+import { BoardListeners, Cell, Coordinates, MoveCoordinates } from '../components/interfaces';
 
 const CELLS_ON_SIDE = 12;
 
 class Grid {
-  private drawingCanvas = new DrawingCanvas();
+  private board = new Board();
 
-  private cellSideLength = this.drawingCanvas.canvas.height / CELLS_ON_SIDE;
+  private cellSideLength = this.board.canvas.height / CELLS_ON_SIDE;
 
   private grid: Cell[] = [];
 
@@ -25,8 +20,8 @@ class Grid {
     this.createGrid();
   }
 
-  public addCanvasListeners(listeners: DrawingCanvasListeners): void {
-    this.drawingCanvas.subscribe(listeners);
+  public addBoardListeners(listeners: BoardListeners): void {
+    this.board.subscribe(listeners);
   }
 
   public getCell({ x, y }: Coordinates): Cell {
@@ -37,11 +32,11 @@ class Grid {
   }
 
   public getContainer(): HTMLDivElement {
-    return this.drawingCanvas.container;
+    return this.board.container;
   }
 
   public getCoordinates({ clientX, clientY }: MouseEvent): Coordinates {
-    const { offsetTop, offsetLeft } = this.drawingCanvas.getOffsetProperties();
+    const { offsetTop, offsetLeft } = this.board.getOffsetProperties();
 
     const xDiff = clientX - offsetLeft;
     const yDiff = clientY - offsetTop;
@@ -57,16 +52,16 @@ class Grid {
   }
 
   public getSideLength(): number {
-    return this.drawingCanvas.getSideLength();
+    return this.board.getSideLength();
   }
 
   public highlight(): void {
-    this.drawingCanvas.highlight();
+    this.board.highlight();
   }
 
   public repaint(): void {
     this.grid.forEach((cell) => {
-      this.drawingCanvas.fill(cell, this.cellSideLength);
+      this.board.fill(cell, this.cellSideLength);
     });
   }
 
@@ -94,9 +89,9 @@ class Grid {
   }
 
   private onResize: EventListener = (): void => {
-    const sideLength = this.drawingCanvas.getSideLength();
+    const sideLength = this.board.getSideLength();
 
-    this.drawingCanvas.resize(sideLength);
+    this.board.resize(sideLength);
 
     this.resize(sideLength);
     this.repaint();

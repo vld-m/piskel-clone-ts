@@ -1,13 +1,13 @@
-import './drawing-canvas.css';
+import './board.css';
 
 // entities
 import Canvas from '../canvas/canvas';
 
 // interfaces
-import { DrawingCanvasListeners } from '../interfaces';
+import { BoardListeners } from '../interfaces';
 
-class DrawingCanvas extends Canvas {
-  public container = document.createElement('div');
+class Board extends Canvas {
+  public readonly container = document.createElement('div');
 
   constructor() {
     super();
@@ -27,19 +27,14 @@ class DrawingCanvas extends Canvas {
   }
 
   public highlight(): void {
-    this.canvas.classList.add('drawing-canvas__canvas_highlighted');
+    this.canvas.classList.add('board__canvas_highlighted');
 
     setTimeout(() => {
-      this.canvas.classList.remove('drawing-canvas__canvas_highlighted');
+      this.canvas.classList.remove('board__canvas_highlighted');
     }, 500);
   }
 
-  public subscribe({
-    onMouseDown,
-    onMouseLeave,
-    onMouseMove,
-    onMouseUp,
-  }: DrawingCanvasListeners): void {
+  public subscribe({ onMouseDown, onMouseLeave, onMouseMove, onMouseUp }: BoardListeners): void {
     this.canvas.addEventListener('mousedown', onMouseDown);
     this.canvas.addEventListener('mouseleave', onMouseLeave);
     this.canvas.addEventListener('mousemove', onMouseMove);
@@ -51,8 +46,8 @@ class DrawingCanvas extends Canvas {
   }
 
   private setContainerAttributes(): void {
-    this.container.classList.add('container', 'drawing-canvas__container');
+    this.container.classList.add('container', 'board__container');
   }
 }
 
-export default DrawingCanvas;
+export default Board;
