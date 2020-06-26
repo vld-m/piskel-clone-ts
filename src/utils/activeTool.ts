@@ -23,8 +23,8 @@ class ActiveTool {
     return this.activeTool.onMouseDown(cell, CURRENT_COLOR);
   }
 
-  public onMouseMove(actionCoordinates: MoveCoordinates, gridSize: number): Coordinates[] {
-    return this.activeTool.onMouseMove(actionCoordinates, gridSize);
+  public onMouseMove(actionCoordinates: MoveCoordinates, gridSideLength: number): Coordinates[] {
+    return this.activeTool.onMouseMove(actionCoordinates, gridSideLength);
   }
 
   private setActiveTool = async (name: string): Promise<void> => {

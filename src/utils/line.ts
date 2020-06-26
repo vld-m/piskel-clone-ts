@@ -1,12 +1,12 @@
 import { Coordinates, MoveCoordinates } from '../components/interfaces';
 
 class Line {
-  private gridSize = 1;
+  private gridSideLength = 1;
 
   private precision = 1;
 
-  public plot({ start, end }: MoveCoordinates, gridSize: number): Coordinates[] {
-    this.gridSize = gridSize;
+  public plot({ start, end }: MoveCoordinates, gridSideLength: number): Coordinates[] {
+    this.gridSideLength = gridSideLength;
 
     const { x: x0, y: y0 } = start;
     const { x: x1, y: y1 } = end;
@@ -34,7 +34,7 @@ class Line {
   }
 
   private isInsideGrid(x: number, y: number): boolean {
-    return x >= 0 && y >= 0 && x < this.gridSize && y < this.gridSize;
+    return x >= 0 && y >= 0 && x < this.gridSideLength && y < this.gridSideLength;
   }
 
   private plotHorizontal(

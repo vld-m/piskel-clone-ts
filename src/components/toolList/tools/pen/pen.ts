@@ -21,8 +21,8 @@ class Pen implements Tool {
     return { isModified: true, cell };
   }
 
-  public onMouseMove(coordinates: MoveCoordinates, gridSize: number): Coordinates[] {
-    return line.plot(coordinates, gridSize);
+  public onMouseMove(coordinates: MoveCoordinates, gridSideLength: number): Coordinates[] {
+    return line.plot(coordinates, gridSideLength);
   }
 }
 

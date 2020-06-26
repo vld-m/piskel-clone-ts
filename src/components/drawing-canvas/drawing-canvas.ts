@@ -1,31 +1,18 @@
 import './drawing-canvas.css';
 
+// entities
+import Canvas from '../canvas/canvas';
+
 // interfaces
-import { CanvasListeners, Cell } from '../interfaces';
+import { DrawingCanvasListeners } from '../interfaces';
 
-class Canvas {
-  private canvas = document.createElement('canvas');
-
-  private container = document.createElement('div');
-
-  private context = this.canvas.getContext('2d', { desynchronized: true });
+class DrawingCanvas extends Canvas {
+  public container = document.createElement('div');
 
   constructor() {
+    super();
     this.setContainerAttributes();
-    this.addCanvasListeners();
     this.renderCanvas();
-  }
-
-  public getCanvas(): HTMLCanvasElement {
-    return this.canvas;
-  }
-
-  public getContainer(): HTMLDivElement {
-    return this.container;
-  }
-
-  public getContext(): CanvasRenderingContext2D | null {
-    return this.context;
   }
 
   public getOffsetProperties(): { offsetTop: number; offsetLeft: number } {
@@ -35,7 +22,7 @@ class Canvas {
     };
   }
 
-  public getSize(): number {
+  public getSideLength(): number {
     return Math.min(this.container.clientWidth, this.container.clientHeight);
   }
 
@@ -44,37 +31,20 @@ class Canvas {
 
     setTimeout(() => {
       this.canvas.classList.remove('drawing-canvas__canvas_highlighted');
-    }, 250);
+    }, 500);
   }
 
-  public paint({ color, topLeftX, topLeftY }: Cell, size: number): void {
-    if (this.context === null) {
-      return;
-    }
-
-    this.context.fillStyle = color;
-    this.context.fillRect(topLeftX, topLeftY, size, size);
-  }
-
-  public resize(size: number): void {
-    this.canvas.width = size;
-    this.canvas.height = size;
-  }
-
-  public subscribe({ onMouseDown, onMouseLeave, onMouseMove, onMouseUp }: CanvasListeners): void {
+  public subscribe({
+    onMouseDown,
+    onMouseLeave,
+    onMouseMove,
+    onMouseUp,
+  }: DrawingCanvasListeners): void {
     this.canvas.addEventListener('mousedown', onMouseDown);
     this.canvas.addEventListener('mouseleave', onMouseLeave);
     this.canvas.addEventListener('mousemove', onMouseMove);
     this.canvas.addEventListener('mouseup', onMouseUp);
   }
-
-  private addCanvasListeners(): void {
-    this.canvas.addEventListener('contextmenu', this.onContextMenu);
-  }
-
-  private onContextMenu: EventListener = (event: Event): void => {
-    event.preventDefault();
-  };
 
   private renderCanvas(): void {
     this.container.append(this.canvas);
@@ -85,4 +55,4 @@ class Canvas {
   }
 }
 
-export default Canvas;
+export default DrawingCanvas;

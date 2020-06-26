@@ -1,15 +1,20 @@
 // entities
-import Canvas from '../components/drawing-canvas/drawing-canvas';
+import DrawingCanvas from '../components/drawing-canvas/drawing-canvas';
 
 // interfaces
-import { CanvasListeners, Cell, Coordinates, MoveCoordinates } from '../components/interfaces';
+import {
+  Cell,
+  Coordinates,
+  DrawingCanvasListeners,
+  MoveCoordinates,
+} from '../components/interfaces';
 
 const CELLS_ON_SIDE = 12;
 
 class Grid {
-  private canvas = new Canvas();
+  private drawingCanvas = new DrawingCanvas();
 
-  private cellSize = this.canvas.getCanvas().height / CELLS_ON_SIDE;
+  private cellSideLength = this.drawingCanvas.canvas.height / CELLS_ON_SIDE;
 
   private grid: Cell[] = [];
 
@@ -20,23 +25,23 @@ class Grid {
     this.createGrid();
   }
 
-  public addCanvasListeners(listeners: CanvasListeners): void {
-    this.canvas.subscribe(listeners);
+  public addCanvasListeners(listeners: DrawingCanvasListeners): void {
+    this.drawingCanvas.subscribe(listeners);
   }
 
   public getCell({ x, y }: Coordinates): Cell {
-    const row = Math.floor(x / this.cellSize);
-    const column = Math.floor(y / this.cellSize);
+    const row = Math.floor(x / this.cellSideLength);
+    const column = Math.floor(y / this.cellSideLength);
 
     return this.grid[row + column * CELLS_ON_SIDE];
   }
 
   public getContainer(): HTMLDivElement {
-    return this.canvas.getContainer();
+    return this.drawingCanvas.container;
   }
 
   public getCoordinates({ clientX, clientY }: MouseEvent): Coordinates {
-    const { offsetTop, offsetLeft } = this.canvas.getOffsetProperties();
+    const { offsetTop, offsetLeft } = this.drawingCanvas.getOffsetProperties();
 
     const xDiff = clientX - offsetLeft;
     const yDiff = clientY - offsetTop;
@@ -51,17 +56,17 @@ class Grid {
     };
   }
 
-  public getSize(): number {
-    return this.canvas.getSize();
+  public getSideLength(): number {
+    return this.drawingCanvas.getSideLength();
   }
 
   public highlight(): void {
-    this.canvas.highlight();
+    this.drawingCanvas.highlight();
   }
 
   public repaint(): void {
     this.grid.forEach((cell) => {
-      this.canvas.paint(cell, this.cellSize);
+      this.drawingCanvas.fill(cell, this.cellSideLength);
     });
   }
 
@@ -79,8 +84,8 @@ class Grid {
       for (let column = 0; column < CELLS_ON_SIDE; column += 1) {
         const cell: Cell = {
           color: 'transparent',
-          topLeftX: column * this.cellSize,
-          topLeftY: row * this.cellSize,
+          topLeftX: column * this.cellSideLength,
+          topLeftY: row * this.cellSideLength,
         };
 
         this.grid.push(cell);
@@ -89,24 +94,23 @@ class Grid {
   }
 
   private onResize: EventListener = (): void => {
-    const { clientWidth, clientHeight } = this.canvas.getContainer();
-    const size = Math.min(clientWidth, clientHeight);
+    const sideLength = this.drawingCanvas.getSideLength();
 
-    this.canvas.resize(size);
+    this.drawingCanvas.resize(sideLength);
 
-    this.resize(size);
+    this.resize(sideLength);
     this.repaint();
   };
 
-  private resize(size: number): void {
-    const ratio = size / (this.cellSize * CELLS_ON_SIDE);
+  private resize(sideLength: number): void {
+    const ratio = sideLength / (this.cellSideLength * CELLS_ON_SIDE);
 
     this.grid.forEach((cell) => {
       cell.topLeftX *= ratio;
       cell.topLeftY *= ratio;
     });
 
-    this.cellSize *= ratio;
+    this.cellSideLength *= ratio;
   }
 }
 

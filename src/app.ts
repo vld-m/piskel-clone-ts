@@ -17,13 +17,8 @@ function onMouseDown(event: Event): void {
   const targetCell = grid.getCell(downCoordinates);
   const { isModified } = activeTool.onMouseDown(targetCell);
 
-  const frameCanvas = frameList.currentFrame?.canvas;
-  const frameContext = frameCanvas?.getContext('2d');
-  const frameCavasLength = frameCanvas?.width;
-
-  if (isModified && frameContext && frameCavasLength) {
-    const image = grid.repaint();
-    // frameContext.drawImage(image, 0, 0, frameCavasLength, frameCavasLength);
+  if (isModified) {
+    grid.repaint();
   }
 
   grid.setPreviousActionEndCoordinates(downCoordinates);
@@ -36,7 +31,7 @@ function onMouseMove(event: Event): void {
 
   const moveCoordinates = grid.getMoveCoordinates(event as MouseEvent);
 
-  const processedCoordinates = activeTool.onMouseMove(moveCoordinates, grid.getSize());
+  const processedCoordinates = activeTool.onMouseMove(moveCoordinates, grid.getSideLength());
   const processedCells = processedCoordinates.reduce<Cell[]>((cells, coordinates) => {
     const targetCell = grid.getCell(coordinates);
     const { isModified, cell } = activeTool.onMouseDown(targetCell);

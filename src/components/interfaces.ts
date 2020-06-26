@@ -1,10 +1,3 @@
-interface CanvasListeners {
-  onMouseDown: EventListener;
-  onMouseLeave: EventListener;
-  onMouseMove: EventListener;
-  onMouseUp: EventListener;
-}
-
 interface Cell {
   color: string;
   topLeftX: number;
@@ -16,6 +9,13 @@ interface Coordinates {
   y: number;
 }
 
+interface DrawingCanvasListeners {
+  onMouseDown: EventListener;
+  onMouseLeave: EventListener;
+  onMouseMove: EventListener;
+  onMouseUp: EventListener;
+}
+
 interface MoveCoordinates {
   start: Coordinates;
   end: Coordinates;
@@ -24,7 +24,7 @@ interface MoveCoordinates {
 interface Tool {
   name: string;
   onMouseDown(cell: Cell, color: string): { isModified: boolean; cell?: Cell };
-  onMouseMove(coordinates: MoveCoordinates, gridSize: number): Coordinates[];
+  onMouseMove(coordinates: MoveCoordinates, gridSideLength: number): Coordinates[];
 }
 
-export { CanvasListeners, Cell, Coordinates, MoveCoordinates, Tool };
+export { Cell, Coordinates, DrawingCanvasListeners, MoveCoordinates, Tool };
