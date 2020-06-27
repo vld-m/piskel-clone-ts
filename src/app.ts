@@ -14,22 +14,18 @@ let actionEndCoordinates = { x: 0, y: 0 };
 function onMouseDown(event: Event): void {
   isMouseDown = true;
 
-  const { currentFrame } = frameList;
-
   const boardCoordinates = board.getCoordinates(event as MouseEvent);
 
   const targetCell = board.getCell(boardCoordinates);
 
   const { isModified } = activeTool.onMouseDown(targetCell);
 
+  const { currentFrame } = frameList;
+
   if (isModified && currentFrame) {
-    const frameCoordinates = currentFrame.getCoordinates(boardCoordinates, board.getSideLength());
-
-    const frameCell = currentFrame.getCell(frameCoordinates);
-
-    activeTool.onMouseDown(frameCell);
-
     board.repaint();
+
+    currentFrame.mapColors(board.grid);
     currentFrame.repaint();
   }
 
@@ -55,8 +51,13 @@ function onMouseMove(event: Event): void {
     return isModified && cell ? [...cells, cell] : cells;
   }, []);
 
-  if (processedCells.length > 0) {
+  const { currentFrame } = frameList;
+
+  if (processedCells.length > 0 && currentFrame) {
     board.repaint();
+
+    currentFrame.mapColors(board.grid);
+    currentFrame.repaint();
   }
 
   actionEndCoordinates = moveCoordinates.end;

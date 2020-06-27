@@ -5,7 +5,7 @@ import { Cell } from '../components/interfaces';
 import { EVENTS } from '../components/constants';
 
 type Events = {
-  [EVENTS.FRAME_CHANGE]: [Cell[], number];
+  [EVENTS.FRAME_CHANGE]: Cell[];
   [EVENTS.TOOL_CHANGE]: string;
 };
 

@@ -9,7 +9,6 @@ import { BUTTONS } from '../constants';
 
 // interfaces
 import { FrameListeners } from '../interfaces';
-import { Coordinates } from '../../interfaces';
 
 class Frame extends Canvas {
   public readonly container = document.createElement('div');
@@ -33,15 +32,6 @@ class Frame extends Canvas {
 
   public deselect(): void {
     this.container.classList.remove('frame__container_active');
-  }
-
-  public getCoordinates(boardCoordinates: Coordinates, boardSideLength: number): Coordinates {
-    const ratio = this.getSideLength() / boardSideLength;
-
-    return {
-      x: boardCoordinates.x * ratio,
-      y: boardCoordinates.y * ratio,
-    };
   }
 
   public hide(): void {
@@ -111,12 +101,8 @@ class Frame extends Canvas {
     window.addEventListener('resize', this.onResize);
   }
 
-  private getSideLength(): number {
-    return Math.min(this.container.clientWidth, this.container.clientHeight);
-  }
-
   private onResize = (): void => {
-    this.resize(this.getSideLength());
+    this.resize(this.container.clientWidth);
   };
 
   private renderButtons(): void {

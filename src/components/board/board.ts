@@ -29,6 +29,13 @@ class Board extends Canvas {
     };
   }
 
+  public getCell({ x, y }: Coordinates): Cell {
+    const row = Math.floor(x / this.cellSideLength);
+    const column = Math.floor(y / this.cellSideLength);
+
+    return this.grid[row + column * this.gridDimension];
+  }
+
   public getSideLength(): number {
     return Math.min(this.container.clientWidth, this.container.clientHeight);
   }
@@ -55,10 +62,10 @@ class Board extends Canvas {
     emitter.on(EVENTS.FRAME_CHANGE, this.onFrameChange);
   }
 
-  private onFrameChange = ([frameGrid, frameSideLength]: [Cell[], number]): void => {
-    this.setGrid(frameGrid);
+  private onFrameChange = (frameGrid: Cell[]): void => {
+    this.clear();
 
-    this.resizeGrid(this.getSideLength() / frameSideLength);
+    this.mapColors(frameGrid);
 
     this.repaint();
   };

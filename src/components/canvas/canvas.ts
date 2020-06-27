@@ -1,63 +1,64 @@
 import './canvas.css';
 
 // interfaces
-import { Cell, Coordinates } from '../interfaces';
+import { Cell } from '../interfaces';
 
 class Canvas {
+  public grid: Cell[] = [];
+
   protected canvas = document.createElement('canvas');
 
   protected context = this.canvas.getContext('2d', { desynchronized: true });
 
-  private grid: Cell[] = [];
+  protected gridDimension = 12;
 
-  private gridDimension = 12;
-
-  private cellSideLength = this.canvas.height / this.gridDimension;
+  protected cellSideLength = this.canvas.width / this.gridDimension;
 
   constructor() {
-    this.addCanvasListeners();
-    this.createGrid();
+    this.addCanvasListeners().createGrid();
   }
 
-  public getCell({ x, y }: Coordinates): Cell {
-    const row = Math.floor(x / this.cellSideLength);
-    const column = Math.floor(y / this.cellSideLength);
+  public clear(): Canvas {
+    if (this.context === null) {
+      return this;
+    }
 
-    return this.grid[row + column * this.gridDimension];
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.width);
+
+    return this;
   }
 
-  public repaint(): void {
+  public mapColors(grid: Cell[]): Canvas {
+    grid.forEach(({ color }, cellIndex) => {
+      this.grid[cellIndex].color = color;
+    });
+
+    return this;
+  }
+
+  public repaint(): Canvas {
     this.grid.forEach((cell) => {
       this.fill(cell, this.cellSideLength);
     });
+
+    return this;
   }
 
-  protected resize(sideLength: number): void {
-    this.resizeCanvas(sideLength);
+  protected resize(sideLength: number): Canvas {
+    this.resizeCanvas(sideLength)
+      .resizeGrid(sideLength / (this.cellSideLength * this.gridDimension))
+      .repaint();
 
-    this.resizeGrid(sideLength / (this.cellSideLength * this.gridDimension));
-
-    this.repaint();
+    return this;
   }
 
-  protected resizeGrid(ratio: number): void {
-    this.grid.forEach((cell) => {
-      cell.topLeftX *= ratio;
-      cell.topLeftY *= ratio;
-    });
-
-    this.cellSideLength *= ratio;
-  }
-
-  protected setGrid(grid: Cell[]): void {
-    this.grid = grid;
-  }
-
-  private addCanvasListeners(): void {
+  private addCanvasListeners(): Canvas {
     this.canvas.addEventListener('contextmenu', this.onContextMenu);
+
+    return this;
   }
 
-  private createGrid(): void {
+  private createGrid(): Canvas {
     for (let row = 0; row < this.gridDimension; row += 1) {
       for (let column = 0; column < this.gridDimension; column += 1) {
         const cell: Cell = {
@@ -69,24 +70,41 @@ class Canvas {
         this.grid.push(cell);
       }
     }
+
+    return this;
   }
 
-  private fill({ color, topLeftX, topLeftY }: Cell, sideLength: number): void {
+  private fill({ color, topLeftX, topLeftY }: Cell, sideLength: number): Canvas {
     if (this.context === null) {
-      return;
+      return this;
     }
 
     this.context.fillStyle = color;
     this.context.fillRect(topLeftX, topLeftY, sideLength, sideLength);
+
+    return this;
   }
 
   private onContextMenu: EventListener = (event: Event): void => {
     event.preventDefault();
   };
 
-  private resizeCanvas(sideLength: number): void {
+  private resizeCanvas(sideLength: number): Canvas {
     this.canvas.width = sideLength;
     this.canvas.height = sideLength;
+
+    return this;
+  }
+
+  private resizeGrid(ratio: number): Canvas {
+    this.grid.forEach((cell) => {
+      cell.topLeftX *= ratio;
+      cell.topLeftY *= ratio;
+    });
+
+    this.cellSideLength *= ratio;
+
+    return this;
   }
 }
 

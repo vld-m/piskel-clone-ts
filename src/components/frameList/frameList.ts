@@ -1,15 +1,17 @@
 import './frameList.css';
 
 // entities
+import emitter from '../../utils/emitter';
+import Button from './button/button';
 import Frame from './frame/frame';
 import Placeholder from './placeholder/placeholder';
-import Button from './button/button';
 
 // type guards
 import { isHTMLElement } from '../typeGuards';
 
 // constants
 import { BUTTONS } from './constants';
+import { EVENTS } from '../constants';
 
 // interfaces
 import { FrameListeners } from './interfaces';
@@ -190,8 +192,10 @@ class FrameList {
 
     const { targetFrame } = this.getFrameAndIndex(target);
 
-    if (targetFrame !== this.currentFrame) {
+    if (this.currentFrame && targetFrame !== this.currentFrame) {
       this.updateCurrentFrame(targetFrame);
+
+      emitter.emit(EVENTS.FRAME_CHANGE, this.currentFrame.grid);
     }
   };
 
