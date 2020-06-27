@@ -8,7 +8,8 @@ import { EVENTS } from '../components/constants';
 // interfaces
 import { Cell, Coordinates, MoveCoordinates, Tool } from '../components/interfaces';
 
-const CURRENT_COLOR = '#ff6347';
+// eslint-disable-next-line no-bitwise
+const CURRENT_COLOR = `#${((Math.random() * 0xffffff) << 0).toString(16).padStart(6, '0')}`;
 
 class ActiveTool {
   private activeTool: Tool = pen;

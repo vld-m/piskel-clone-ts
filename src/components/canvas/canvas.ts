@@ -18,16 +18,6 @@ class Canvas {
     this.addCanvasListeners().createGrid();
   }
 
-  public clear(): Canvas {
-    if (this.context === null) {
-      return this;
-    }
-
-    this.context.clearRect(0, 0, this.canvas.width, this.canvas.width);
-
-    return this;
-  }
-
   public mapColors(grid: Cell[]): Canvas {
     grid.forEach(({ color }, cellIndex) => {
       this.grid[cellIndex].color = color;
@@ -40,6 +30,16 @@ class Canvas {
     this.grid.forEach((cell) => {
       this.fill(cell, this.cellSideLength);
     });
+
+    return this;
+  }
+
+  protected clear(): Canvas {
+    if (this.context === null) {
+      return this;
+    }
+
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.width);
 
     return this;
   }
