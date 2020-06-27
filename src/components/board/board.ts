@@ -4,21 +4,31 @@ import './board.css';
 import Canvas from '../canvas/canvas';
 
 // interfaces
-import { BoardListeners } from '../interfaces';
+import { BoardListeners, Cell, Coordinates } from '../interfaces';
 
 class Board extends Canvas {
   public readonly container = document.createElement('div');
 
   constructor() {
     super();
+    this.addWindowListeners();
     this.setContainerAttributes();
     this.renderCanvas();
   }
 
-  public getOffsetProperties(): { offsetTop: number; offsetLeft: number } {
+  public getCell({ x, y }: Coordinates): Cell {
+    const row = Math.floor(x / this.cellSideLength);
+    const column = Math.floor(y / this.cellSideLength);
+
+    return this.grid[row + column * this.gridDimension];
+  }
+
+  public getCoordinates({ clientX, clientY }: MouseEvent): Coordinates {
+    const { offsetTop, offsetLeft } = this.canvas;
+
     return {
-      offsetTop: this.canvas.offsetTop,
-      offsetLeft: this.canvas.offsetLeft,
+      x: clientX - offsetLeft,
+      y: clientY - offsetTop,
     };
   }
 
@@ -31,7 +41,7 @@ class Board extends Canvas {
 
     setTimeout(() => {
       this.canvas.classList.remove('board__canvas_highlighted');
-    }, 500);
+    }, 250);
   }
 
   public subscribe({ onMouseDown, onMouseLeave, onMouseMove, onMouseUp }: BoardListeners): void {
@@ -40,6 +50,17 @@ class Board extends Canvas {
     this.canvas.addEventListener('mousemove', onMouseMove);
     this.canvas.addEventListener('mouseup', onMouseUp);
   }
+
+  private addWindowListeners(): void {
+    window.addEventListener('DOMContentLoaded', this.onResize);
+    window.addEventListener('resize', this.onResize);
+  }
+
+  private onResize: EventListener = (): void => {
+    const sideLength = this.getSideLength();
+
+    this.resize(sideLength);
+  };
 
   private renderCanvas(): void {
     this.container.append(this.canvas);
@@ -50,4 +71,4 @@ class Board extends Canvas {
   }
 }
 
-export default Board;
+export default new Board();

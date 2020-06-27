@@ -1,27 +1,30 @@
 import './app.css';
 
 import activeTool from './utils/activeTool';
+import board from './components/board/board';
 import frameList from './components/frameList/frameList';
-import grid from './utils/grid';
 
 import { Cell } from './components/interfaces';
 
 const main = document.querySelector('main') as HTMLElement;
 
 let isMouseDown = false;
+let actionEndCoordinates = { x: 0, y: 0 };
 
 function onMouseDown(event: Event): void {
   isMouseDown = true;
 
-  const downCoordinates = grid.getCoordinates(event as MouseEvent);
-  const targetCell = grid.getCell(downCoordinates);
+  const downCoordinates = board.getCoordinates(event as MouseEvent);
+
+  const targetCell = board.getCell(downCoordinates);
+
   const { isModified } = activeTool.onMouseDown(targetCell);
 
   if (isModified) {
-    grid.repaint();
+    board.repaint();
   }
 
-  grid.setPreviousActionEndCoordinates(downCoordinates);
+  actionEndCoordinates = downCoordinates;
 }
 
 function onMouseMove(event: Event): void {
@@ -29,21 +32,25 @@ function onMouseMove(event: Event): void {
     return;
   }
 
-  const moveCoordinates = grid.getMoveCoordinates(event as MouseEvent);
+  const moveCoordinates = {
+    start: actionEndCoordinates,
+    end: board.getCoordinates(event as MouseEvent),
+  };
 
-  const processedCoordinates = activeTool.onMouseMove(moveCoordinates, grid.getSideLength());
+  const processedCoordinates = activeTool.onMouseMove(moveCoordinates, board.getSideLength());
+
   const processedCells = processedCoordinates.reduce<Cell[]>((cells, coordinates) => {
-    const targetCell = grid.getCell(coordinates);
+    const targetCell = board.getCell(coordinates);
     const { isModified, cell } = activeTool.onMouseDown(targetCell);
 
     return isModified && cell ? [...cells, cell] : cells;
   }, []);
 
   if (processedCells.length > 0) {
-    grid.repaint();
+    board.repaint();
   }
 
-  grid.setPreviousActionEndCoordinates(moveCoordinates.end);
+  actionEndCoordinates = moveCoordinates.end;
 }
 
 function onMouseLeave(event: Event): void {
@@ -51,18 +58,17 @@ function onMouseLeave(event: Event): void {
     return;
   }
 
-  grid.highlight();
-
   onMouseMove(event);
 
   isMouseDown = false;
+
+  board.highlight();
 }
 
 function onMouseUp(): void {
   isMouseDown = false;
 }
 
-main.append(frameList.container);
-main.append(grid.getContainer());
+main.append(frameList.container, board.container);
 
-grid.addBoardListeners({ onMouseDown, onMouseLeave, onMouseMove, onMouseUp });
+board.subscribe({ onMouseDown, onMouseLeave, onMouseMove, onMouseUp });
