@@ -14,17 +14,26 @@ let actionEndCoordinates = { x: 0, y: 0 };
 function onMouseDown(event: Event): void {
   isMouseDown = true;
 
-  const downCoordinates = board.getCoordinates(event as MouseEvent);
+  const { currentFrame } = frameList;
 
-  const targetCell = board.getCell(downCoordinates);
+  const boardCoordinates = board.getCoordinates(event as MouseEvent);
+
+  const targetCell = board.getCell(boardCoordinates);
 
   const { isModified } = activeTool.onMouseDown(targetCell);
 
-  if (isModified) {
+  if (isModified && currentFrame) {
+    const frameCoordinates = currentFrame.getCoordinates(boardCoordinates, board.getSideLength());
+
+    const frameCell = currentFrame.getCell(frameCoordinates);
+
+    activeTool.onMouseDown(frameCell);
+
     board.repaint();
+    currentFrame.repaint();
   }
 
-  actionEndCoordinates = downCoordinates;
+  actionEndCoordinates = boardCoordinates;
 }
 
 function onMouseMove(event: Event): void {

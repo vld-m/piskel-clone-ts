@@ -2,19 +2,17 @@ import './frame.css';
 
 // entities
 import Button from '../button/button';
+import Canvas from '../../canvas/canvas';
 
 // constants
 import { BUTTONS } from '../constants';
 
 // interfaces
 import { FrameListeners } from '../interfaces';
+import { Coordinates } from '../../interfaces';
 
-class Frame {
-  public readonly canvas = document.createElement('canvas');
-
+class Frame extends Canvas {
   public readonly container = document.createElement('div');
-
-  private context = this.canvas.getContext('2d');
 
   private buttonCopy = new Button(BUTTONS.COPY);
 
@@ -25,15 +23,29 @@ class Frame {
   private index = document.createElement('div');
 
   constructor() {
-    this.addWindowListeners();
+    super();
+    this.addFrameListeners();
     this.setContainerAttributes();
-    this.renderIndex();
     this.renderCanvas();
+    this.renderIndex();
     this.renderButtons();
   }
 
   public deselect(): void {
     this.container.classList.remove('frame__container_active');
+  }
+
+  public getCoordinates(boardCoordinates: Coordinates, boardSideLength: number): Coordinates {
+    const ratio = this.getSideLength() / boardSideLength;
+
+    return {
+      x: boardCoordinates.x * ratio,
+      y: boardCoordinates.y * ratio,
+    };
+  }
+
+  public hide(): void {
+    this.container.classList.add('frame__container_hidden');
   }
 
   public hideButtonsDeleteAndMove(): void {
@@ -43,10 +55,6 @@ class Frame {
 
   public hideIndex(): void {
     this.index.classList.add('frame__index_hidden');
-  }
-
-  public hide(): void {
-    this.container.classList.add('frame__container_hidden');
   }
 
   public remove(): void {
@@ -61,6 +69,10 @@ class Frame {
     this.index.innerText = `${index}`;
   }
 
+  public show(): void {
+    this.container.classList.remove('frame__container_hidden');
+  }
+
   public showButtonsDeleteAndMove(): void {
     this.buttonDelete.show();
     this.buttonMove.show();
@@ -68,10 +80,6 @@ class Frame {
 
   public showIndex(): void {
     this.index.classList.remove('frame__index_hidden');
-  }
-
-  public show(): void {
-    this.container.classList.remove('frame__container_hidden');
   }
 
   public subscribe({ onDragEnter, onDragStart, onSelect, onCopy, onDelete }: FrameListeners): void {
@@ -98,17 +106,22 @@ class Frame {
     this.buttonDelete.unsubscribe(onDelete);
   }
 
-  private addWindowListeners(): void {
+  private addFrameListeners(): void {
     window.addEventListener('DOMContentLoaded', this.onResize);
     window.addEventListener('resize', this.onResize);
   }
 
-  private onResize = (): void => {
-    const size = this.container.clientWidth;
+  private getSideLength(): number {
+    return Math.min(this.container.clientWidth, this.container.clientHeight);
+  }
 
-    this.canvas.width = size;
-    this.canvas.height = size;
+  private onResize = (): void => {
+    this.resize(this.getSideLength());
   };
+
+  private renderButtons(): void {
+    this.container.append(this.buttonDelete.button, this.buttonMove.button, this.buttonCopy.button);
+  }
 
   private renderCanvas(): void {
     setTimeout(() => this.onResize());
@@ -116,20 +129,10 @@ class Frame {
     this.container.append(this.canvas);
   }
 
-  private renderButtons(): void {
-    this.container.append(this.buttonDelete.button, this.buttonMove.button, this.buttonCopy.button);
-  }
-
   private renderIndex(): void {
     this.index.classList.add('frame__index');
 
     this.container.append(this.index);
-  }
-
-  private repaint(size: number, snap: ImageData): void {
-    if (this.context) {
-      this.context.putImageData(snap, 0, 0, 0, 0, size, size);
-    }
   }
 
   private setContainerAttributes(): void {

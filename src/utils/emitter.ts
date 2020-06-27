@@ -1,7 +1,11 @@
+// interfaces
+import { Cell } from '../components/interfaces';
+
 // constants
 import { EVENTS } from '../components/constants';
 
 type Events = {
+  [EVENTS.FRAME_CHANGE]: [Cell[], number];
   [EVENTS.TOOL_CHANGE]: string;
 };
 

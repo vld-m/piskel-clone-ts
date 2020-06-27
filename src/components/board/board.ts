@@ -2,25 +2,22 @@ import './board.css';
 
 // entities
 import Canvas from '../canvas/canvas';
+import emitter from '../../utils/emitter';
 
 // interfaces
 import { BoardListeners, Cell, Coordinates } from '../interfaces';
+
+// constants
+import { EVENTS } from '../constants';
 
 class Board extends Canvas {
   public readonly container = document.createElement('div');
 
   constructor() {
     super();
-    this.addWindowListeners();
+    this.addBoardListeners();
     this.setContainerAttributes();
     this.renderCanvas();
-  }
-
-  public getCell({ x, y }: Coordinates): Cell {
-    const row = Math.floor(x / this.cellSideLength);
-    const column = Math.floor(y / this.cellSideLength);
-
-    return this.grid[row + column * this.gridDimension];
   }
 
   public getCoordinates({ clientX, clientY }: MouseEvent): Coordinates {
@@ -51,10 +48,20 @@ class Board extends Canvas {
     this.canvas.addEventListener('mouseup', onMouseUp);
   }
 
-  private addWindowListeners(): void {
+  private addBoardListeners(): void {
     window.addEventListener('DOMContentLoaded', this.onResize);
     window.addEventListener('resize', this.onResize);
+
+    emitter.on(EVENTS.FRAME_CHANGE, this.onFrameChange);
   }
+
+  private onFrameChange = ([frameGrid, frameSideLength]: [Cell[], number]): void => {
+    this.setGrid(frameGrid);
+
+    this.resizeGrid(this.getSideLength() / frameSideLength);
+
+    this.repaint();
+  };
 
   private onResize: EventListener = (): void => {
     const sideLength = this.getSideLength();
