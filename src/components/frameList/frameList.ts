@@ -90,9 +90,10 @@ class FrameList {
       return;
     }
 
-    const { targetFrame } = this.getFrameAndIndex(target);
     const newFrame = new Frame();
+    const { targetFrame } = this.getFrameAndIndex(target);
 
+    newFrame.mapColors(targetFrame.grid);
     newFrame.subscribe(this.getFrameListeners());
     targetFrame.container.after(newFrame.container);
 
@@ -102,7 +103,7 @@ class FrameList {
   };
 
   private onDelete: EventListener = ({ target }: Event): void => {
-    if (target === null || !isHTMLElement(target)) {
+    if (target === null || this.currentFrame === null || !isHTMLElement(target)) {
       return;
     }
 
@@ -117,6 +118,8 @@ class FrameList {
       this.currentFrame.deselect();
       this.currentFrame = targetIndex === 0 ? this.frameList[1] : this.frameList[targetIndex - 1];
       this.currentFrame.select();
+
+      emitter.emit(EVENTS.FRAME_CHANGE, this.currentFrame.grid);
     }
 
     this.frameList = [
@@ -126,7 +129,7 @@ class FrameList {
 
     this.updateIndexes();
 
-    if (this.currentFrame && this.frameList.length === 1) {
+    if (this.frameList.length === 1) {
       this.currentFrame.hideIndex();
       this.currentFrame.hideButtonsDeleteAndMove();
     }
@@ -194,8 +197,6 @@ class FrameList {
 
     if (this.currentFrame && targetFrame !== this.currentFrame) {
       this.updateCurrentFrame(targetFrame);
-
-      emitter.emit(EVENTS.FRAME_CHANGE, this.currentFrame.grid);
     }
   };
 
@@ -235,6 +236,8 @@ class FrameList {
 
     this.currentFrame = frame;
     this.currentFrame.select();
+
+    emitter.emit(EVENTS.FRAME_CHANGE, this.currentFrame.grid);
   }
 
   private updateFrameList(newFrame: Frame): void {
