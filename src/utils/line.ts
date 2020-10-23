@@ -1,4 +1,4 @@
-import { Coordinates, MoveCoordinates } from '../components/interfaces';
+import { Coordinates, MoveCoordinates } from '../components/types';
 
 class Line {
   private gridSideLength = 1;
@@ -108,4 +108,4 @@ class Line {
   }
 }
 
-export default new Line();
+export const line = new Line();

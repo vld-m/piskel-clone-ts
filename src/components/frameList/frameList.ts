@@ -1,22 +1,24 @@
 import './frameList.css';
 
 // entities
-import emitter from '../../utils/emitter';
-import Button from './button/button';
-import Frame from './frame/frame';
-import Placeholder from './placeholder/placeholder';
+import { Button } from './button';
+import { Frame } from './frame';
+import { Placeholder } from './placeholder';
 
-// type guards
-import { isHTMLElement } from '../typeGuards';
+// utils
+import { emitter } from '../../utils';
 
 // constants
 import { BUTTONS } from './constants';
 import { EVENTS } from '../constants';
 
-// interfaces
-import { FrameListeners } from './interfaces';
+// type guards
+import { isHTMLElement } from '../typeGuards';
 
-class FrameList {
+// types
+import { FrameListeners } from './types';
+
+export class FrameList {
   public readonly container = document.createElement('div');
 
   public currentFrame: Frame | null = null;
@@ -254,5 +256,3 @@ class FrameList {
     this.frameList.forEach((frame, index) => frame.setIndex(index + 1));
   }
 }
-
-export default new FrameList();

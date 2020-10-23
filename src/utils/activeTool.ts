@@ -1,17 +1,19 @@
 // entities
-import emitter from './emitter';
 import pen from '../components/toolList/tools/pen/pen';
+
+// utils
+import { emitter } from './emitter';
 
 // constants
 import { EVENTS } from '../components/constants';
 
-// interfaces
-import { Cell, Coordinates, MoveCoordinates, Tool } from '../components/interfaces';
+// types
+import { Cell, Coordinates, MoveCoordinates, Tool } from '../components/types';
 
 // eslint-disable-next-line no-bitwise
 const CURRENT_COLOR = `#${((Math.random() * 0xffffff) << 0).toString(16).padStart(6, '0')}`;
 
-class ActiveTool {
+export class ActiveTool {
   private activeTool: Tool = pen;
 
   private cache: { [name: string]: Tool } = {};
@@ -41,5 +43,3 @@ class ActiveTool {
     }
   };
 }
-
-export default new ActiveTool();

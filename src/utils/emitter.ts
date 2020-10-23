@@ -1,5 +1,5 @@
-// interfaces
-import { Cell } from '../components/interfaces';
+// types
+import { Cell } from '../components/types';
 
 // constants
 import { EVENTS } from '../components/constants';
@@ -31,4 +31,4 @@ class EventEmitter<T> {
   }
 }
 
-export default new EventEmitter<Events>();
+export const emitter = new EventEmitter<Events>();

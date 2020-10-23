@@ -1,12 +1,15 @@
 import './app.css';
 
-import activeTool from './utils/activeTool';
-import board from './components/board/board';
-import frameList from './components/frameList/frameList';
+import { ActiveTool } from './utils';
+import { Board } from './components/board';
+import { FrameList } from './components/frameList';
 
-import { Cell } from './components/interfaces';
+import { Cell } from './components/types';
 
-const main = document.querySelector('main') as HTMLElement;
+const main = document.querySelector('main');
+const activeTool = new ActiveTool();
+const frameList = new FrameList();
+const board = new Board();
 
 let isMouseDown = false;
 let actionEndCoordinates = { x: 0, y: 0 };
@@ -79,6 +82,8 @@ function onMouseUp(): void {
   isMouseDown = false;
 }
 
-main.append(frameList.container, board.container);
-
 board.subscribe({ onMouseDown, onMouseLeave, onMouseMove, onMouseUp });
+
+if (main) {
+  main.append(frameList.container, board.container);
+}

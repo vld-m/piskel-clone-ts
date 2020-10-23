@@ -1,16 +1,16 @@
 import './frame.css';
 
 // entities
-import Button from '../button/button';
-import Canvas from '../../canvas/canvas';
+import { Button } from '../button';
+import { Canvas } from '../../canvas';
 
 // constants
 import { BUTTONS } from '../constants';
 
-// interfaces
-import { FrameListeners } from '../interfaces';
+// types
+import { FrameListeners } from '../types';
 
-class Frame extends Canvas {
+export class Frame extends Canvas {
   public readonly container = document.createElement('div');
 
   private buttonCopy = new Button(BUTTONS.COPY);
@@ -127,5 +127,3 @@ class Frame extends Canvas {
     this.container.draggable = true;
   }
 }
-
-export default Frame;

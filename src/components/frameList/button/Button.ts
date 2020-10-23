@@ -3,7 +3,7 @@ import './button.css';
 // constants
 import { BUTTONS } from '../constants';
 
-class Button {
+export class Button {
   public readonly button = document.createElement('button');
 
   constructor(private name: string) {
@@ -50,5 +50,3 @@ class Button {
     this.button.innerText = text;
   }
 }
-
-export default Button;

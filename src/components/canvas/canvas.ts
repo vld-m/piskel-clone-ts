@@ -1,9 +1,9 @@
 import './canvas.css';
 
-// interfaces
-import { Cell } from '../interfaces';
+// types
+import { Cell } from '../types';
 
-class Canvas {
+export class Canvas {
   public grid: Cell[] = [];
 
   protected canvas = document.createElement('canvas');
@@ -107,5 +107,3 @@ class Canvas {
     return this;
   }
 }
-
-export default Canvas;

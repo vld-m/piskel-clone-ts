@@ -1,12 +1,12 @@
 /* eslint-disable class-methods-use-this */
 // entites
-import line from '../../../../utils/line';
+import { line } from '../../../../utils';
 
 // constants
 import { TOOLS } from '../../constants';
 
-// interfaces
-import { Cell, Coordinates, MoveCoordinates, Tool } from '../../../interfaces';
+// types
+import { Cell, Coordinates, MoveCoordinates, Tool } from '../../../types';
 
 class Pen implements Tool {
   public readonly name = TOOLS.PEN;

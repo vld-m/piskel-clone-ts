@@ -1,16 +1,18 @@
 import './board.css';
 
 // entities
-import Canvas from '../canvas/canvas';
-import emitter from '../../utils/emitter';
+import { Canvas } from '../canvas';
 
-// interfaces
-import { BoardListeners, Cell, Coordinates } from '../interfaces';
+// utils
+import { emitter } from '../../utils';
+
+// types
+import { BoardListeners, Cell, Coordinates } from '../types';
 
 // constants
 import { EVENTS } from '../constants';
 
-class Board extends Canvas {
+export class Board extends Canvas {
   public readonly container = document.createElement('div');
 
   constructor() {
@@ -84,5 +86,3 @@ class Board extends Canvas {
     this.container.classList.add('container', 'board__container');
   }
 }
-
-export default new Board();

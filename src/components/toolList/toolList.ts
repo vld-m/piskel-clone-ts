@@ -1,8 +1,8 @@
 import './toolList.css';
 import './tools/tool.css';
 
-// entities
-import Emitter from '../../utils/emitter';
+// utils
+import { emitter } from '../../utils';
 
 // type guards
 import { isHTMLElement } from '../typeGuards';
@@ -39,7 +39,7 @@ class ToolList {
 
     this.selectActiveToolContainer(toolContainer);
 
-    Emitter.emit(EVENTS.TOOL_CHANGE, toolContainer.dataset.name as string);
+    emitter.emit(EVENTS.TOOL_CHANGE, toolContainer.dataset.name as string);
   };
 
   private renderToolContainers(): void {
