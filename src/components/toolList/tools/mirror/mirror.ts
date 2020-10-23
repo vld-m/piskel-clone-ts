@@ -5,4 +5,4 @@ class Mirror {
   public readonly name = TOOLS.MIRROR;
 }
 
-export default new Mirror();
+export const mirror = new Mirror();

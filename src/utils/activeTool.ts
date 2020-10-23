@@ -1,5 +1,5 @@
 // entities
-import pen from '../components/toolList/tools/pen/pen';
+import { pen } from '../components/toolList/tools';
 
 // utils
 import { emitter } from './emitter';

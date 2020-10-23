@@ -26,4 +26,4 @@ class Pen implements Tool {
   }
 }
 
-export default new Pen();
+export const pen = new Pen();

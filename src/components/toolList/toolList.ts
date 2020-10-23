@@ -11,7 +11,7 @@ import { isHTMLElement } from '../typeGuards';
 import { TOOLS } from './constants';
 import { EVENTS } from '../constants';
 
-class ToolList {
+export class ToolList {
   public readonly container = document.createElement('div');
 
   private activeToolContainer: HTMLElement | null = null;
@@ -75,5 +75,3 @@ class ToolList {
     this.container.classList.add('container', 'tool-list__container');
   }
 }
-
-export default new ToolList();
