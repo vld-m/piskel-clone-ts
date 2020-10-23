@@ -33,11 +33,11 @@ export class Button {
     this.button.classList.remove('frame__button_hidden');
   }
 
-  public subscribe(listener: EventListener): void {
+  public subscribe(listener: (event: MouseEvent) => void): void {
     this.button.addEventListener('click', listener);
   }
 
-  public unsubscribe(listener: EventListener): void {
+  public unsubscribe(listener: (event: MouseEvent) => void): void {
     this.button.removeEventListener('click', listener);
   }
 

@@ -26,7 +26,7 @@ export class ToolList {
     this.container.addEventListener('click', this.onSelect);
   }
 
-  private onSelect: EventListener = async ({ target }: Event): Promise<void> => {
+  private onSelect = async ({ target }: MouseEvent): Promise<void> => {
     if (target === null || !isHTMLElement(target)) {
       return;
     }

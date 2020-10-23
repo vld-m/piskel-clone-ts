@@ -14,10 +14,10 @@ const board = new Board();
 let isMouseDown = false;
 let actionEndCoordinates = { x: 0, y: 0 };
 
-function onMouseDown(event: Event): void {
+function onMouseDown(event: MouseEvent): void {
   isMouseDown = true;
 
-  const boardCoordinates = board.getCoordinates(event as MouseEvent);
+  const boardCoordinates = board.getCoordinates(event);
 
   const targetCell = board.getCell(boardCoordinates);
 
@@ -35,14 +35,14 @@ function onMouseDown(event: Event): void {
   actionEndCoordinates = boardCoordinates;
 }
 
-function onMouseMove(event: Event): void {
+function onMouseMove(event: MouseEvent): void {
   if (!isMouseDown) {
     return;
   }
 
   const moveCoordinates = {
     start: actionEndCoordinates,
-    end: board.getCoordinates(event as MouseEvent),
+    end: board.getCoordinates(event),
   };
 
   const processedCoordinates = activeTool.onMouseMove(moveCoordinates, board.getSideLength());
@@ -66,7 +66,7 @@ function onMouseMove(event: Event): void {
   actionEndCoordinates = moveCoordinates.end;
 }
 
-function onMouseLeave(event: Event): void {
+function onMouseLeave(event: MouseEvent): void {
   if (!isMouseDown) {
     return;
   }

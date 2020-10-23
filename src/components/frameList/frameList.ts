@@ -76,7 +76,7 @@ export class FrameList {
     return this.frameList.find((frame) => frame.container === container);
   }
 
-  private onAdd: EventListener = (): void => {
+  private onAdd = (): void => {
     const newFrame = new Frame();
 
     newFrame.subscribe(this.getFrameListeners());
@@ -87,7 +87,7 @@ export class FrameList {
     this.updateIndexes();
   };
 
-  private onCopy: EventListener = ({ target }: Event): void => {
+  private onCopy = ({ target }: MouseEvent): void => {
     if (target === null || !isHTMLElement(target)) {
       return;
     }
@@ -104,7 +104,7 @@ export class FrameList {
     this.updateIndexes();
   };
 
-  private onDelete: EventListener = ({ target }: Event): void => {
+  private onDelete = ({ target }: MouseEvent): void => {
     if (target === null || this.currentFrame === null || !isHTMLElement(target)) {
       return;
     }
@@ -137,7 +137,7 @@ export class FrameList {
     }
   };
 
-  private onDragEnter: EventListener = ({ target }: Event): void => {
+  private onDragEnter = ({ target }: DragEvent): void => {
     if (target === null || !isHTMLElement(target)) {
       return;
     }
@@ -154,11 +154,11 @@ export class FrameList {
     }
   };
 
-  private onDragOver: EventListener = (event: Event): void => {
+  private onDragOver = (event: DragEvent): void => {
     event.preventDefault();
   };
 
-  private onDragStart: EventListener = ({ target }: Event): void => {
+  private onDragStart = ({ target }: DragEvent): void => {
     if (target === null || !isHTMLElement(target)) {
       return;
     }
@@ -176,7 +176,7 @@ export class FrameList {
     });
   };
 
-  private onDrop: EventListener = (event: Event): void => {
+  private onDrop = (event: DragEvent): void => {
     event.preventDefault();
 
     if (this.draggedFrame) {
@@ -190,7 +190,7 @@ export class FrameList {
     this.draggedFrame = null;
   };
 
-  private onSelect: EventListener = ({ target }: Event): void => {
+  private onSelect = ({ target }: MouseEvent): void => {
     if (target === null || !isHTMLElement(target) || FrameList.isButton(target)) {
       return;
     }

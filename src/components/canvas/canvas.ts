@@ -85,7 +85,7 @@ export class Canvas {
     return this;
   }
 
-  private onContextMenu: EventListener = (event: Event): void => {
+  private onContextMenu = (event: Event): void => {
     event.preventDefault();
   };
 

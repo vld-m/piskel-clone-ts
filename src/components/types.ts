@@ -1,8 +1,8 @@
 export interface BoardListeners {
-  onMouseDown: EventListener;
-  onMouseLeave: EventListener;
-  onMouseMove: EventListener;
-  onMouseUp: EventListener;
+  onMouseDown: (event: MouseEvent) => void;
+  onMouseLeave: (event: MouseEvent) => void;
+  onMouseMove: (event: MouseEvent) => void;
+  onMouseUp: (event: MouseEvent) => void;
 }
 
 export interface Cell {

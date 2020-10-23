@@ -72,7 +72,7 @@ export class Board extends Canvas {
     this.repaint();
   };
 
-  private onResize: EventListener = (): void => {
+  private onResize = (): void => {
     const sideLength = this.getSideLength();
 
     this.resize(sideLength);
