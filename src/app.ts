@@ -1,8 +1,9 @@
 import './app.css';
 
-import { ActiveTool } from './utils';
 import { Board } from './components/board';
 import { FrameList } from './components/frameList';
+
+import { ActiveTool } from './utils';
 
 import { Cell } from './components/types';
 
