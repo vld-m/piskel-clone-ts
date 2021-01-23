@@ -1,5 +1,3 @@
-import './placeholder.css';
-
 const INDEX_SHIFT = 0.5;
 
 export class Placeholder {

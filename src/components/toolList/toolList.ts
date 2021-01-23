@@ -1,6 +1,3 @@
-import './toolList.css';
-import './tools/tool.css';
-
 // utils
 import { emitter } from '../../utils';
 

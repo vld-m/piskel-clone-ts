@@ -1,5 +1,3 @@
-import './frame.css';
-
 // entities
 import { Button } from '../button';
 import { Canvas } from '../../canvas';

@@ -1,11 +1,8 @@
 import './app.css';
 
-import { Board } from './components/board';
-import { FrameList } from './components/frameList';
+import { Board, Cell, FrameList } from './components';
 
 import { ActiveTool } from './utils';
-
-import { Cell } from './components/types';
 
 const main = document.querySelector('main');
 const activeTool = new ActiveTool();

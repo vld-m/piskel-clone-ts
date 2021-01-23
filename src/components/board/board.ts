@@ -1,5 +1,3 @@
-import './board.css';
-
 // entities
 import { Canvas } from '../canvas';
 

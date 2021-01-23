@@ -1,0 +1,4 @@
+@import './board/index.css';
+@import './canvas/index.css';
+@import './frameList/index.css';
+@import './toolList/index.css';

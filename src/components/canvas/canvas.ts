@@ -1,5 +1,3 @@
-import './canvas.css';
-
 // types
 import { Cell } from '../types';
 
