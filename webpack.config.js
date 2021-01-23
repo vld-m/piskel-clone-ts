@@ -71,7 +71,7 @@ module.exports = (env, argv) => {
     ...config,
     devtool: 'source-map',
     devServer: {
-      contentBase: './dist',
+      contentBase: './src',
     },
   };
 };
