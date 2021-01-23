@@ -43,7 +43,7 @@ export class ToolList {
     const createToolContainer = (name: string): HTMLDivElement => {
       const toolContainer = document.createElement('div');
 
-      import(`./tool/${name}/${name}.css`);
+      import(`./tools/${name}/${name}.css`);
 
       toolContainer.classList.add('tool', `tool_${name}`);
       toolContainer.dataset.name = `${name}`;
