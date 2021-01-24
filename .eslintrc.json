@@ -3,16 +3,19 @@
     "browser": true,
     "es2021": true
   },
-  "extends": ["plugin:react/recommended", "airbnb", "prettier"],
+  "extends": [
+    "airbnb-base",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "prettier"
+  ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    },
     "ecmaVersion": 12,
+    "project": "./tsconfig.json",
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint"],
+  "plugins": ["@typescript-eslint"],
   "rules": {
     "@typescript-eslint/member-ordering": [
       "error",
@@ -99,7 +102,8 @@
         "js": "never"
       }
     ],
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "no-param-reassign": ["error", { "props": false }]
   },
   "settings": {
     "import/resolver": "webpack"
