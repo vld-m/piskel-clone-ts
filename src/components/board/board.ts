@@ -20,6 +20,13 @@ export class Board extends Canvas {
     this.renderCanvas();
   }
 
+  public getCell({ x, y }: Coordinates): Cell {
+    const row = Math.floor(x / this.cellSideLength);
+    const column = Math.floor(y / this.cellSideLength);
+
+    return this.grid[row + column * this.gridDimension];
+  }
+
   public getCoordinates({ clientX, clientY }: MouseEvent): Coordinates {
     const { offsetTop, offsetLeft } = this.canvas;
 
@@ -27,13 +34,6 @@ export class Board extends Canvas {
       x: clientX - offsetLeft,
       y: clientY - offsetTop,
     };
-  }
-
-  public getCell({ x, y }: Coordinates): Cell {
-    const row = Math.floor(x / this.cellSideLength);
-    const column = Math.floor(y / this.cellSideLength);
-
-    return this.grid[row + column * this.gridDimension];
   }
 
   public getSideLength(): number {

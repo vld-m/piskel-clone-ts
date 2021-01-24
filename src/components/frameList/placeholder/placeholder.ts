@@ -17,16 +17,16 @@ export class Placeholder {
     this.container.classList.add('placeholder_hidden');
   }
 
+  public setPosition(targetIndex: number): void {
+    this.position = targetIndex;
+  }
+
   public setPositionAfter(targetIndex: number): void {
     this.position = targetIndex + INDEX_SHIFT;
   }
 
   public setPositionBefore(targetIndex: number): void {
     this.position = targetIndex - INDEX_SHIFT;
-  }
-
-  public setPosition(targetIndex: number): void {
-    this.position = targetIndex;
   }
 
   public show(): void {

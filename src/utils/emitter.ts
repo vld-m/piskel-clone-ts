@@ -8,24 +8,26 @@ type Events = {
   [EVENTS.FRAME_CHANGE]: Cell[];
   [EVENTS.TOOL_CHANGE]: string;
 };
+type Listener<T, K extends keyof T> = (payload: T[K]) => Promise<void>;
+type Listeners<T> = { [K in keyof T]?: Listener<T, K> };
 
 class EventEmitter<T> {
-  private listeners: { [K in keyof T]?: (payload: T[K]) => void } = {};
+  private listeners: Listeners<T> = {};
 
-  emit<L extends keyof T>(eventName: L, payload: T[L]): boolean {
-    const listener = this.listeners[eventName];
+  emit<L extends keyof T>(event: L, payload: T[L]) {
+    const listener = this.listeners[event];
 
-    if (listener !== undefined) {
-      listener(payload);
-
-      return true;
+    if (listener === undefined) {
+      return false;
     }
 
-    return false;
+    listener(payload).catch(console.error);
+
+    return true;
   }
 
-  on<M extends keyof T>(eventName: M, listener: (payload: T[M]) => void): EventEmitter<T> {
-    this.listeners = { ...this.listeners, [eventName]: listener };
+  on<M extends keyof T>(event: M, listener: Listener<T, M>) {
+    this.listeners = { ...this.listeners, [event]: listener };
 
     return this;
   }

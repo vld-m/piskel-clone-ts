@@ -10,6 +10,7 @@ export class Canvas {
 
   protected gridDimension = 12;
 
+  // eslint-disable-next-line @typescript-eslint/member-ordering
   protected cellSideLength = this.canvas.width / this.gridDimension;
 
   constructor() {

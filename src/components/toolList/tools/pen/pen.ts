@@ -11,7 +11,7 @@ import { Cell, Coordinates, MoveCoordinates, Tool } from '../../../types';
 class Pen implements Tool {
   public readonly name = TOOLS.PEN;
 
-  public onMouseDown(cell: Cell, color: string): { isModified: boolean; cell?: Cell } {
+  public onMouseDown(cell: Cell, color: string): { cell?: Cell; isModified: boolean } {
     if (cell.color === color) {
       return { isModified: false };
     }

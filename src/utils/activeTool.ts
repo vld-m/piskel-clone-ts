@@ -22,7 +22,7 @@ export class ActiveTool {
     emitter.on(EVENTS.TOOL_CHANGE, this.setActiveTool);
   }
 
-  public onMouseDown(cell: Cell): { isModified: boolean; cell?: Cell } {
+  public onMouseDown(cell: Cell): { cell?: Cell; isModified: boolean } {
     return this.activeTool.onMouseDown(cell, CURRENT_COLOR);
   }
 
@@ -30,13 +30,15 @@ export class ActiveTool {
     return this.activeTool.onMouseMove(actionCoordinates, gridSideLength);
   }
 
-  private setActiveTool = async (name: string): Promise<void> => {
+  private setActiveTool = async (name: string) => {
     if (this.cache[name]) {
       this.activeTool = this.cache[name];
     } else {
-      const { default: tool }: { default: Tool } = await import(
+      const { default: tool } = (await import(
         /* webpackChunkName: "[request]" */ `./${name}/${name}.ts`
-      );
+      )) as {
+        default: Tool;
+      };
 
       this.cache[tool.name] = tool;
       this.activeTool = tool;

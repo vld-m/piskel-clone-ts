@@ -17,12 +17,12 @@ export interface Coordinates {
 }
 
 export interface MoveCoordinates {
-  start: Coordinates;
   end: Coordinates;
+  start: Coordinates;
 }
 
 export interface Tool {
   name: string;
-  onMouseDown(cell: Cell, color: string): { isModified: boolean; cell?: Cell };
+  onMouseDown(cell: Cell, color: string): { cell?: Cell; isModified: boolean };
   onMouseMove(coordinates: MoveCoordinates, gridSideLength: number): Coordinates[];
 }
