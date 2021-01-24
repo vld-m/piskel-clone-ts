@@ -8,7 +8,7 @@ import { emitter } from '../../utils';
 
 // constants
 import { BUTTONS } from './constants';
-import { EVENTS } from '../constants';
+import { Events } from '../constants';
 
 // type guards
 import { isHTMLElement } from '../typeGuards';
@@ -119,7 +119,7 @@ export class FrameList {
       this.currentFrame = targetIndex === 0 ? this.frameList[1] : this.frameList[targetIndex - 1];
       this.currentFrame.select();
 
-      emitter.emit(EVENTS.FRAME_CHANGE, this.currentFrame.grid);
+      emitter.emit(Events.FrameChange, this.currentFrame.grid);
     }
 
     this.frameList = [
@@ -237,7 +237,7 @@ export class FrameList {
     this.currentFrame = frame;
     this.currentFrame.select();
 
-    emitter.emit(EVENTS.FRAME_CHANGE, this.currentFrame.grid);
+    emitter.emit(Events.FrameChange, this.currentFrame.grid);
   }
 
   private updateFrameList(newFrame: Frame): void {

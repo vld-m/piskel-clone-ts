@@ -94,6 +94,7 @@
         }
       }
     ],
+    "@typescript-eslint/no-shadow": ["error"],
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -109,7 +110,8 @@
         "allow": ["error"]
       }
     ],
-    "no-param-reassign": ["error", { "props": false }]
+    "no-param-reassign": ["error", { "props": false }],
+    "no-shadow": "off"
   },
   "settings": {
     "import/resolver": "webpack"

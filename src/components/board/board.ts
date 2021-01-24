@@ -8,7 +8,7 @@ import { emitter } from '../../utils';
 import { BoardListeners, Cell, Coordinates } from '../types';
 
 // constants
-import { EVENTS } from '../constants';
+import { Events } from '../constants';
 
 export class Board extends Canvas {
   public readonly container = document.createElement('div');
@@ -59,7 +59,7 @@ export class Board extends Canvas {
     window.addEventListener('DOMContentLoaded', this.onResize);
     window.addEventListener('resize', this.onResize);
 
-    emitter.on(EVENTS.FRAME_CHANGE, this.onFrameChange);
+    emitter.on(Events.FrameChange, this.onFrameChange);
   }
 
   private onFrameChange = (frameGrid: Cell[]): void => {

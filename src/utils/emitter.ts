@@ -2,13 +2,13 @@
 import { Cell } from '../components/types';
 
 // constants
-import { EVENTS } from '../components/constants';
+import { Events } from '../components/constants';
 
-type Events = {
-  [EVENTS.FRAME_CHANGE]: Cell[];
-  [EVENTS.TOOL_CHANGE]: string;
+type EmitterEvents = {
+  [Events.FrameChange]: Cell[];
+  [Events.ToolChange]: string;
 };
-type Listener<T, K extends keyof T> = (payload: T[K]) => Promise<void>;
+type Listener<T, K extends keyof T> = (payload: T[K]) => void;
 type Listeners<T> = { [K in keyof T]?: Listener<T, K> };
 
 class EventEmitter<T> {
@@ -21,7 +21,7 @@ class EventEmitter<T> {
       return false;
     }
 
-    listener(payload).catch(console.error);
+    listener(payload);
 
     return true;
   }
@@ -33,4 +33,4 @@ class EventEmitter<T> {
   }
 }
 
-export const emitter = new EventEmitter<Events>();
+export const emitter = new EventEmitter<EmitterEvents>();

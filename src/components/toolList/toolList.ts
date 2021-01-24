@@ -6,7 +6,7 @@ import { isHTMLElement } from '../typeGuards';
 
 // constants
 import { TOOLS } from './constants';
-import { EVENTS } from '../constants';
+import { Events } from '../constants';
 
 export class ToolList {
   public readonly container = document.createElement('div');
@@ -36,7 +36,7 @@ export class ToolList {
 
     this.selectActiveToolContainer(toolContainer);
 
-    emitter.emit(EVENTS.TOOL_CHANGE, toolContainer.dataset.name as string);
+    emitter.emit(Events.ToolChange, toolContainer.dataset.name as string);
   };
 
   private renderToolContainers(): void {

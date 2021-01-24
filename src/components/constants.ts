@@ -1,4 +1,4 @@
-export const EVENTS = {
-  FRAME_CHANGE: 'frame change',
-  TOOL_CHANGE: 'tool change',
-} as const;
+export enum Events {
+  FrameChange = 'FRAME_CHANGE',
+  ToolChange = 'TOOL_CHANGE',
+}

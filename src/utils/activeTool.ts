@@ -5,7 +5,7 @@ import { pen } from '../components/toolList/tools';
 import { emitter } from './emitter';
 
 // constants
-import { EVENTS } from '../components/constants';
+import { Events } from '../components/constants';
 
 // types
 import { Cell, Coordinates, MoveCoordinates, Tool } from '../components/types';
@@ -19,7 +19,7 @@ export class ActiveTool {
   private cache: { [name: string]: Tool } = {};
 
   constructor() {
-    emitter.on(EVENTS.TOOL_CHANGE, this.setActiveTool);
+    emitter.on(Events.ToolChange, this.setActiveTool);
   }
 
   public onMouseDown(cell: Cell): { cell?: Cell; isModified: boolean } {
@@ -30,18 +30,16 @@ export class ActiveTool {
     return this.activeTool.onMouseMove(actionCoordinates, gridSideLength);
   }
 
-  private setActiveTool = async (name: string) => {
+  private setActiveTool = (name: string) => {
     if (this.cache[name]) {
       this.activeTool = this.cache[name];
     } else {
-      const { default: tool } = (await import(
-        /* webpackChunkName: "[request]" */ `./${name}/${name}.ts`
-      )) as {
-        default: Tool;
-      };
-
-      this.cache[tool.name] = tool;
-      this.activeTool = tool;
+      import(/* webpackChunkName: "[request]" */ `./${name}/${name}.ts`)
+        .then(({ default: tool }: { default: Tool }) => {
+          this.cache[tool.name] = tool;
+          this.activeTool = tool;
+        })
+        .catch(console.error);
     }
   };
 }
